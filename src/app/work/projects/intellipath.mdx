@@ -1,0 +1,102 @@
+---
+title: "IntelliPath AI: Personalized Learning Through AI-Driven Video Summaries"
+publishedAt: "In Progress"
+summary: "Developing an AI-powered platform that transforms YouTube videos into structured summaries, actionable notes, and personalized learning paths. Features include transcript analysis, AI assistant chat, sidebar navigation with history/folders, payment integration, and cloud-based persistence."
+images:
+  - "/images/projects/project-01/00-home.png"
+  - "/images/projects/project-01/01-prompt-screen.png"
+  - "/images/projects/project-01/02-video-screen.png"
+  - "/images/projects/project-01/03-flow-chart.png"
+  - "/images/projects/project-01/04-code.png"
+  - "/images/projects/project-01/05-supabase.png"
+
+team:
+  - name: "Haytham Abouelfaid"
+    role: "IT & Cybersecurity Student"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/haytham-abouelfaid"
+link: "http://intellipathai.services/"
+---
+
+## Overview
+
+I am building **IntelliPath AI**, a web platform designed to help users make consistent progress across any area of life—career, finance, technical skills, or personal growth.  
+
+The app combines **AI-powered chat**, **YouTube transcript analysis**, and **structured note generation** to provide clear, actionable takeaways from video learning content. Users can save content, search past work, and organize videos/notes into categorized folders.  
+
+**Why this matters:** The internet has an abundance of self-improvement and technical learning resources, but it’s overwhelming and time-consuming to filter through. IntelliPath AI creates a **personalized productivity system** that converts passive watching into active knowledge retention and structured learning.
+
+---
+
+## Key Features
+
+- **Transcript Analysis & Summarization**  
+  - Integrated AI models to parse YouTube transcripts (with fallback to external STT if disabled).  
+  - Automatically generate structured notes: key points, practical applications, and action steps.  
+  - Notes adapt to user-defined goals (e.g., “I want to master the 48 Laws of Power”).  
+
+- **AI Assistant Chatbox**  
+  - Users can ask questions about video content or their notes.  
+  - AI provides context-aware answers, explanations, and examples.  
+  - Chat history is persistent and searchable.
+
+- **Sidebar Navigation (ChatGPT-style)**  
+  - Recent conversations automatically titled by keyword + prompt.  
+  - Options to rename, share, or delete conversations.  
+  - Saved folders auto-organize by subject/goal; users can also create custom folders.  
+  - Popup window for folder contents with search and scrolling support.
+
+- **Monetization & Plans**  
+  - Free plan with limited history/summaries.  
+  - Premium plan (Stripe integration) with 14-day trial, unlimited summaries, advanced notes, and folder management.  
+
+- **Cloud Storage Integration**  
+  - Supabase database and storage ensure persistence of conversations, notes, and saved videos.  
+  - OAuth 2.0 (Google, LinkedIn, Apple) for account authentication.  
+
+- **Automated Categorization**  
+  - Saved content is auto-tagged by theme and learning goal.  
+  - Enhances search and helps build thematic knowledge libraries.  
+
+---
+
+## Technologies Used
+
+- **Frontend:** Next.js (React), Tailwind CSS, shadcn/ui components, lucide-react icons.  
+- **Backend:** FastAPI (Python), Node.js API routes for handling video/transcripts.  
+- **AI Models:** OpenAI API (chat + summarization), Whisper/AssemblyAI for transcript fallback.  
+- **Database & Auth:** Supabase (Postgres, storage, OAuth 2.0).  
+- **Payments:** Stripe (plans, billing portal, free trial).  
+- **Cloud:** Vercel/Tempo for hosting and CI/CD integration.  
+- **Integrations:** YouTube Data API for metadata, transcript parsing libraries.  
+
+---
+
+## Challenges and Learnings
+
+- **Transcript reliability:** YouTube’s transcript API often failed when captions were disabled. To address this, I implemented a **fallback transcription system** (Whisper/AssemblyAI) to ensure coverage for any video.  
+- **State persistence:** Initially, refreshing reset progress. I redesigned data flows with Supabase to **persist user history, folders, and settings** across sessions.  
+- **AI answer quality:** Early versions returned generic responses. By refining system prompts and structuring assistant behavior, I enabled **flexible Q&A** that supports productivity, context recall, and follow-up learning.  
+- **Monetization flow:** Integrated Stripe plans (free + premium trial), ensuring **subscription logic works across account states**.  
+- **UI/UX:** Modeled the sidebar experience after ChatGPT for familiarity, while adding custom features like folder popups and automatic categorization.
+
+**Takeaway:** This project deepened my skills in **full-stack development, AI integration, and SaaS product design**. It’s teaching me to handle not just technical challenges but also **user experience design, persistence, and monetization**—skills critical for building real-world IT/AI platforms.
+
+---
+
+## Outcome
+
+- **Status:** *In Progress*  
+- **Deliverables so far:**  
+  - Functional transcript summarization + note generation pipeline.  
+  - AI assistant chat with context awareness.  
+  - Sidebar with persistent history and folders.  
+  - Stripe-based subscription plans and Supabase persistence.  
+
+**Next Steps:**  
+- Expand transcript fallback pipeline for edge cases.  
+- Add profile customization (pfp, settings, account switching).  
+- Improve note quality with timestamped key-point extraction.  
+- Beta test with real users for feedback.  
+
+---

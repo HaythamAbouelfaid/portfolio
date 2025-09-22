@@ -1,56 +1,78 @@
 ---
-title: "Enable or disable pages for your portfolio"
-summary: "Magic Portfolio's RouteGuard component takes care of conditionally rendering pages based on your settings."
-image: "/images/gallery/horizontal-2.jpg"
-publishedAt: "2025-04-22"
-tag: "Magic Portfolio"
+title: "Fixing BIOS Error 1962: A Real-World Windows Recovery Story"
+summary: "How I troubleshot and recovered a PC stuck on 'Error 1962: No Operating System Found' — from BIOS configuration and repair tools to a clean OS reinstall."
+image: "/images/projects/project-01/00-error1962.jpg"
+publishedAt: "2025-07-31"
+tag: "System Recovery"
 ---
 
-## Enable or disable pages
+## The Problem
 
-Magic Portfolio's `RouteGuard` component takes care of conditionally rendering pages based on the `routes` object in the `resources/config.js` file.
+A friend’s PC was left completely unbootable — stuck on **“Error 1962: No Operating System Found”** after a suspected virus wiped critical boot data.  
+Instead of declaring it a loss, I treated this as a real-world IT troubleshooting exercise.
 
-<CodeBlock
-    marginBottom="16"
-    highlight="6"
-    codes={[
-  {
-    code:
-`const routes = {
-    '/':        true,
-    '/about':   true,
-    '/work':    true,
-    '/blog':    true,
-    '/gallery': false,
-};`,
-    language: "tsx",
-    label: "src/app/resources/config.js"
-  }
-]} />
+---
 
-The code above will ensure that the `/gallery` page is not accessible and is not displayed in the navigation.
+## The Process
 
-## Add new pages
+Here’s how I worked through the recovery:
 
-When creating a new page, it needs to be added to the `routes` object in the `resources/config.js` file.
+1. **BIOS/UEFI Inspection**  
+   - Accessed BIOS to confirm drives were detected.  
+   - Reviewed and adjusted **Boot Order, UEFI/Legacy mode, and CSM** settings.  
 
-<CodeBlock
-    marginBottom="16"
-    highlight="6"
-    codes={[
-  {
-    code:
-`const routes = {
-    '/':        true,
-    '/about':   true,
-    '/work':    true,
-    '/blog':    true,
-    '/gallery': false,
-    '/music': true,
-};`,
-    language: "tsx",
-    label: "src/app/resources/config.js"
-  }
-]} />
+2. **System File Checks**  
+   - Booted into recovery tools.  
+   - Used **Command Prompt** to run diagnostics.  
+   - Tried `sfc /scannow` and `DISM /Online /Cleanup-Image /RestoreHealth` to verify integrity.  
 
-The code above will ensure that the `/music` page is accessible. Users will be able to navigate to it after adding it to the navigation menu in the `components/Header.tsx` file.
+3. **Service & Hardware Verification**  
+   - Cross-checked system info and hardware status.  
+   - Confirmed the issue wasn’t hardware failure but a corrupted OS boot sector.  
+
+4. **Reinstallation**  
+   - Created a bootable USB with Windows 10.  
+   - Performed a **clean install** to fully restore system functionality.  
+
+---
+
+## Key Challenges
+
+- **No Salvage Path**: Once it was clear the OS was beyond repair, I had to pivot from recovery to reinstall.  
+- **BIOS Confusion**: Default boot configs didn’t match the new USB media — required careful reordering.  
+- **Patience in Testing**: Multiple repair commands and reboots were necessary to rule out partial fixes.  
+
+---
+
+## What I Learned
+
+- **Structured Troubleshooting Works**: Moving step by step (BIOS → repair tools → reinstall) prevents guesswork.  
+- **Not Every System Can Be Repaired**: Sometimes the clean install is the most efficient, reliable fix.  
+- **Communicating With Non-Technical Users**: I had to explain to my friend why a reinstall was necessary, which is a key IT support skill.  
+
+---
+
+## Outcome
+
+From a system that showed nothing but **Error 1962**, I restored the PC to a fully working state.  
+This wasn’t just about fixing one computer — it reinforced the fundamentals of:  
+
+- BIOS/UEFI configuration  
+- System file checks and command-line tools  
+- Recovery planning and fallback strategies  
+
+---
+
+## Screenshots
+
+![Error 1962 screen](/images/projects/project-01/00-error1962.jpg)  
+![BIOS main menu](/images/projects/project-01/01-bios-main.jpg)  
+![BIOS startup sequence](/images/projects/project-01/02-bios-startup.JPG)  
+![Windows login after reinstall](/images/projects/project-01/03-win-login.jpg)  
+
+---
+
+## Takeaway
+
+This project taught me that real-world IT work isn’t always glamorous SOC dashboards — sometimes it’s methodical break/fix work that keeps systems alive.  
+Both matter equally in an IT career, and this gave me confidence handling boot-level failures in the field.

@@ -1,0 +1,100 @@
+---
+title: "Windows Recovery Project: BIOS Boot Failure (Error 1962)"
+publishedAt: "2025-07-30"
+summary: "Troubleshot and restored a compromised Windows desktop that failed with BIOS Error 1962: 'No Operating System Found.' Adjusted BIOS boot configuration, attempted DISM/SFC repairs, then performed a clean OS reinstall via bootable USB to recover full functionality."
+images:
+  - "/images/projects/project-01/00-error1962.jpg"
+  - "/images/projects/project-01/01-bios-main.jpg"
+  - "/images/projects/project-01/02-bios-startup.JPG"
+  - "/images/projects/project-01/03-win-login.jpg"
+  - "/images/projects/project-01/04-cmd-and-services.jpg"
+  - "/images/projects/project-01/05-win-restart.jpg"
+
+team:
+  - name: "Haytham Abouelfaid"
+    role: "IT & Cybersecurity Student"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/haytham-abouelfaid"
+link: "https://lnkd.in/p/ddaKzeuH"
+---
+
+## Overview
+
+This project documents a real-world IT recovery scenario where a Windows 10 desktop was compromised by a suspected cyberattack and rendered unbootable with **Error 1962: No Operating System Found**. The system was effectively “dead on arrival,” unable to load the OS or detect the boot drive.
+
+I approached the problem systematically:
+
+1. **Diagnosed BIOS state:** Discovered the boot drive missing.  
+2. **Reconfigured firmware:** Adjusted UEFI/Legacy boot order and CSM settings.  
+3. **Attempted repair:** Ran Windows built-in tools (`DISM`, `SFC`) for OS recovery.  
+4. **Escalated response:** When repair failed, created a bootable USB installer.  
+5. **Performed clean install:** Reinstalled Windows 10, restored functionality, verified stability.  
+
+**Why this matters:** IT professionals frequently encounter endpoint failures caused by malware, corruption, or misconfigurations. This project demonstrates hands-on **BIOS troubleshooting, OS recovery, and escalation to clean reinstalls**—critical Tier 1–2 IT support and cybersecurity response skills.
+
+---
+
+## Key Features
+
+- **BIOS investigation:**  
+  - Accessed BIOS **Main** and **Devices** tabs to confirm hardware presence.  
+  - Startup tab revealed incorrect boot mode.  
+  - Reconfigured **UEFI/CSM settings** and boot order.
+
+- **Windows Recovery Environment:**  
+  - Used advanced boot options to reach **WinRE**.  
+  - Attempted startup repair, Safe Mode, and advanced recovery options.
+
+- **Command-line diagnostics:**  
+  - Executed **System File Checker (SFC):**  
+    ```bash
+    sfc /scannow
+    ```
+  - Attempted **Deployment Imaging Servicing and Management (DISM):**  
+    ```bash
+    DISM /Online /Cleanup-Image /RestoreHealth
+    ```
+  - Checked Windows Modules Installer service in **Services.msc**.
+
+- **OS Reinstallation via Bootable Media:**  
+  - Created bootable USB with **Windows Media Creation Tool**.  
+  - Wiped corrupted partitions and reinstalled Windows 10 cleanly.  
+  - Verified successful boot into the restored login screen.
+
+---
+
+## Technologies Used
+
+- **Firmware & OS:** BIOS/UEFI configuration, Windows 10, CSM boot.  
+- **Recovery Tools:** Windows Recovery Environment (WinRE), Startup Settings.  
+- **Command-Line Utilities:** `DISM`, `SFC`, `services.msc`.  
+- **Boot Media:** Windows Media Creation Tool, USB bootloader.  
+- **Security Context:** Malware suspicion, incident response mindset.  
+
+---
+
+## Challenges and Learnings
+
+- **BIOS detection issues:** Initially the boot drive was not visible; required toggling UEFI/Legacy support.  
+- **Windows repair failures:** `DISM` and `SFC` could not restore integrity, forcing escalation.  
+- **Recovery options missing:** Default **Reset this PC** option was absent, highlighting the need for external media.  
+- **Incident context:** Root cause traced to suspected malware that damaged boot records.  
+
+**Key takeaway:** In endpoint recovery, layered troubleshooting is critical:  
+- **Step 1:** Attempt least invasive fixes (BIOS, Safe Mode, DISM/SFC).  
+- **Step 2:** Escalate to reinstall if unrecoverable.  
+- **Step 3:** Validate system stability and re-enforce basic cyber hygiene.
+
+---
+
+## Outcome
+
+- **System recovery:** Fully restored functionality via Windows 10 reinstall.  
+- **Skills demonstrated:** BIOS troubleshooting, WinRE usage, DISM/SFC commands, clean OS installation.  
+- **Recruiter value:** This project simulates **Tier 1–2 IT support, helpdesk escalation, and cyber incident response**—diagnosing a compromised system, executing repairs, and knowing when to escalate to reinstall.  
+- **Next steps:**  
+  - Add post-incident hardening (AV install, patching, firewall).  
+  - Automate bootable USB creation with scripted tools.  
+  - Document recovery SOPs for faster future response.
+
+---

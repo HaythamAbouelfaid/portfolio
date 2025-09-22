@@ -122,6 +122,7 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
         method="post"
         id="mc-embedded-subscribe-form"
         name="mc-embedded-subscribe-form"
+        target="_blank"
       >
         <Row
           id="mc_embed_signup_scroll"
@@ -147,16 +148,6 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
             onBlur={handleBlur}
             errorMessage={error}
           />
-          <div style={{ display: "none" }}>
-            <input
-              type="checkbox"
-              readOnly
-              name="group[3492][1]"
-              id="mce-group[3492]-3492-0"
-              value=""
-              checked
-            />
-          </div>
           <div id="mce-responses" className="clearfalse">
             <div className="response" id="mce-error-response" style={{ display: "none" }}></div>
             <div className="response" id="mce-success-response" style={{ display: "none" }}></div>
@@ -165,14 +156,14 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
             <input
               type="text"
               readOnly
-              name="b_c1a5a210340eb6c7bff33b2ba_0462d244aa"
+              name="b_4b7d742341f2e25a1cd7ec92b_3f7ed35e8b"
               tabIndex={-1}
               value=""
             />
           </div>
           <div className="clear">
             <Row height="48" vertical="center">
-              <Button id="mc-embedded-subscribe" value="Subscribe" size="m" fillWidth>
+              <Button type="submit" id="mc-embedded-subscribe" value="Subscribe" size="m" fillWidth>
                 Subscribe
               </Button>
             </Row>

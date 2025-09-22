@@ -2,20 +2,20 @@ import { About, Blog, Gallery, Home, Newsletter, Person, Social, Work } from "@/
 import { Line, Logo, Row, Text } from "@once-ui-system/core";
 
 const person: Person = {
-  firstName: "Selene",
-  lastName: "Yu",
-  name: `Selene Yu`,
-  role: "Design Engineer",
+  firstName: "Haytham",
+  lastName: "Abouelfaid",
+  name: `Haytham Abouelfaid`,
+  role: "IT & Cybersecurity Student",
   avatar: "/images/avatar.jpg",
-  email: "example@gmail.com",
-  location: "Asia/Jakarta", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
-  languages: ["English", "Bahasa"], // optional: Leave the array empty if you don't want to display languages
+  email: "haythamwick2019@gmail.com",
+  location: "America/New_York", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
+  languages: ["English", "Arabic"], // optional: Leave the array empty if you don't want to display languages
 };
 
 const newsletter: Newsletter = {
   display: true,
   title: <>Subscribe to {person.firstName}'s Newsletter</>,
-  description: <>My weekly newsletter about creativity and engineering</>,
+  description: <>Insights on IT, cybersecurity projects, and career growth</>,
 };
 
 const social: Social = [
@@ -24,17 +24,12 @@ const social: Social = [
   {
     name: "GitHub",
     icon: "github",
-    link: "https://github.com/once-ui-system",
+    link: "https://github.com/haythamabouelfaid",
   },
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/company/once-ui/",
-  },
-  {
-    name: "Threads",
-    icon: "threads",
-    link: "https://www.threads.com/@once_ui",
+    link: "https://www.linkedin.com/in/haytham-abouelfaid/",
   },
   {
     name: "Email",
@@ -49,29 +44,30 @@ const home: Home = {
   label: "Home",
   title: `${person.name}'s Portfolio`,
   description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>Building bridges between design and code</>,
+  headline: <>Turning technical knowledge into real-word IT & cybersecurity solutions</>,
   featured: {
     display: true,
     title: (
       <Row gap="12" vertical="center">
-        <strong className="ml-4">Once UI</strong>{" "}
+        <strong className="ml-4">Active Directory SIEM + SOAR Automation</strong>{" "}
         <Line background="brand-alpha-strong" vert height="20" />
         <Text marginRight="4" onBackground="brand-medium">
-          Featured work
+          Featured Project
         </Text>
       </Row>
     ),
-    href: "/work/building-once-ui-a-customizable-design-system",
+    href: "/work/active-directory-siem-soar-automation",
   },
   subline: (
     <>
-      I'm Selene, a design engineer at{" "}
+      I'm Haytham Abouelfaid, an IT & Cybersecurity student at{" "}
       <Logo
         dark
         icon="/trademarks/wordmark-dark.svg"
         style={{ display: "inline-flex", top: "0.25em", marginLeft: "-0.25em" }}
       />
-      , where I craft intuitive
+      , building hands-on projects in Active Directory, SIEM, SOAR, and Cloud Security to
+      replicate real-world environments.
       <br /> user experiences. After hours, I build my own projects.
     </>
   ),
@@ -98,53 +94,117 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-        Selene is a Jakarta-based design engineer with a passion for transforming complex challenges
-        into simple, elegant design solutions. Her work spans digital interfaces, interactive
-        experiences, and the convergence of design and technology.
+        Haytham is a U.S.-based IT & Cybersecurity student at Northern Virginia Community College
+        (transfer path to George Mason University). Certified in Google IT Support, AI Essentials,
+        and Microsoft Security, he is passionate about system recovery, cloud security, SIEM/SOAR,
+        and building labs that simulate enterprise-level security environments.
       </>
     ),
   },
   work: {
     display: true, // set to false to hide this section
-    title: "Work Experience",
+    title: "Experience",
     experiences: [
       {
-        company: "FLY",
-        timeframe: "2022 - Present",
-        role: "Senior Design Engineer",
+        company: "Loudoun County Public Schools & AWS",
+        timeframe: "June 2025 - July 2025",
+        role: "IT & CS Rising Intern",
         achievements: [
           <>
-            Redesigned the UI/UX for the FLY platform, resulting in a 20% increase in user
-            engagement and 30% faster load times.
+            Instruct coding concepts using Python, AI tools, Twine, LEGO robotics, and 3D printing for hands-on projects that address real-world issues.
           </>,
           <>
-            Spearheaded the integration of AI tools into design workflows, enabling designers to
-            iterate 50% faster.
+            Foster computational thinking, debugging skills, and foundational AI understanding through project-based learning.
+          </>,
+          <>
+            Blend digital storytelling with computer science and AI principles to enhance student creativity.
+          </>,
+          <>
+            Foster student creativity while teaching debugging and technical problem-solving, blending ELA and computer science skills.
           </>,
         ],
         images: [
           // optional: leave the array empty if you don't want to display images
           {
-            src: "/images/projects/project-01/cover-01.jpg",
+            src: "/images/projects/project-01/cover-cs-rising.jpg",
             alt: "Once UI Project",
             width: 16,
             height: 9,
           },
+          {
+            src: "/images/projects/project-01/1-cs-project.jpg",
+            alt: "Once UI Project",
+            width: 16,
+            height: 9,
+          },        
         ],
       },
       {
-        company: "Creativ3",
-        timeframe: "2018 - 2022",
-        role: "Lead Designer",
+        company: "Home Depot",
+        timeframe: "Feb 2025 - Present",
+        role: "Retail Sales Associate",
         achievements: [
           <>
-            Developed a design system that unified the brand across multiple platforms, improving
-            design consistency by 40%.
+            Managed online and in-store order fulfillment, including processing pick-up and delivery requests using company systems.
           </>,
           <>
-            Led a cross-functional team to launch a new product line, contributing to a 15% increase
-            in overall company revenue.
+            Operated handheld technology for inventory checks, barcode scanning, and real-time product updates.
           </>,
+          <>
+            Assisted customers with selecting and troubleshooting technology products and handled order fulfillment through handheld systems.
+          </>,
+        ],
+        images: [],
+      },
+
+      {
+        company: "Computer Science Honors Scoeity",
+        timeframe: "June 2025 - July 2025",
+        role: "Member",
+        achievements: [
+          <>Taught elementary students coding basics using Scratch and Google Autodraw to build foundational programming skills.</>,
+          <>Organized and led coding workshops to introduce young learners to programming and creative problem-solving.</>,
+          <>Competed in CyberSlam 2025 at George Mason University, applying practical cybersecurity techniques in real-world simulation challenges.</>,
+          <>Solved algorithmic problems in the UVA Coding Competition, demonstrating proficiency in Python programming and problem-solving.</>,
+          <>Collaborated with peers to plan events and support fellow students in improving their coding and cybersecurity knowledge.</>,
+          <>Gained experience presenting technical material in simple, engaging ways — strengthening public speaking and communication skills.</>,
+        ],
+        images: [
+          // optional: leave the array empty if you don't want to display images
+          {
+            src: "/images/projects/project-01/cshs-uva.jpg",
+            alt: "Once UI Project",
+            width: 16,
+            height: 9,
+          },
+          {
+            src: "/images/projects/project-01/cshs-cyberslam-1.jpg",
+            alt: "Once UI Project",
+            width: 16,
+            height: 9,
+          }, 
+          {
+            src: "/images/projects/project-01/cshs-cyberslam.jpg",
+            alt: "Once UI Project",
+            width: 16,
+            height: 9,
+          },  
+          {
+            src: "/images/projects/project-01/cshs-volunteer.jpg",
+            alt: "Once UI Project",
+            width: 16,
+            height: 9,
+          },            
+        ],
+      },
+      {
+        company: "Best Buy",
+        timeframe: "Nov 2024 - Jan 2025",
+        role: "Retail Sales Associate",
+        achievements: [
+          <>Assisted customers in selecting technology products, explaining product functionalities in clear, approachable terms.</>,
+          <>Assisted customers with technology selection and setup guidance & provided basic troubleshooting and support for devices and store technology.</>,
+          <>Assisted customers with selecting and troubleshooting technology products, supported app navigation, and handled order fulfillment.</>,
         ],
         images: [],
       },
@@ -155,75 +215,98 @@ const about: About = {
     title: "Studies",
     institutions: [
       {
-        name: "University of Jakarta",
-        description: <>Studied software engineering.</>,
+        name: "Northen Virginia Community College",
+        description: <>Associate of Science in Information Technology (2025–2027).</>,
       },
       {
-        name: "Build the Future",
-        description: <>Studied online marketing and personal branding.</>,
+        name: "George Mason University",
+        description: <>B.S. Information Technology, Cybersecurity concentration (Transfer).</>,
       },
     ],
   },
   technical: {
-    display: true, // set to false to hide this section
+    display: true,
     title: "Technical skills",
     skills: [
       {
-        title: "Figma",
-        description: (
-          <>Able to prototype in Figma with Once UI with unnatural speed.</>
-        ),
+        title: "Cybersecurity",
+        description: <>SIEM (Splunk, Microsoft Sentinel), SOAR (Shuffle), log analysis, detection engineering, AD hardening.</>,
         tags: [
-          {
-            name: "Figma",
-            icon: "figma",
-          },
+          { name: "Splunk", icon: "splunk" },
+          { name: "Sentinel", icon: "microsoft" },
+          { name: "Active Directory", icon: "windows" },
         ],
-        // optional: leave the array empty if you don't want to display images
         images: [
-          {
-            src: "/images/projects/project-01/cover-02.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-          {
-            src: "/images/projects/project-01/cover-03.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
+          { src: "/images/projects/project-01/06-search-results.png", alt: "Splunk detection search results", width: 16, height: 9 },
+          { src: "/images/projects/project-01/00-cover-attack-map.png", alt: "Microsoft Sentinel attack map", width: 16, height: 9 },
         ],
       },
       {
-        title: "Next.js",
-        description: (
-          <>Building next gen apps with Next.js + Once UI + Supabase.</>
-        ),
+        title: "Networking & IT Support",
+        description: <>Windows/Mac/Linux troubleshooting, IP networking, VPN/Wi-Fi security, router config, system recovery.</>,
         tags: [
-          {
-            name: "JavaScript",
-            icon: "javascript",
-          },
-          {
-            name: "Next.js",
-            icon: "nextjs",
-          },
-          {
-            name: "Supabase",
-            icon: "supabase",
-          },
+          { name: "Networking", icon: "network" },
+          { name: "Linux", icon: "linux" },
+          { name: "Windows", icon: "windows" },
         ],
-        // optional: leave the array empty if you don't want to display images
         images: [
-          {
-            src: "/images/projects/project-01/cover-04.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
+          { src: "/images/projects/project-01/00-error1962.jpg", alt: "Error 1962 no operating system found", width: 16, height: 9 },
+          { src: "/images/projects/project-01/01-bios-main.jpg", alt: "BIOS configuration screen", width: 16, height: 9 },
         ],
-      },  
+      },
+      {
+        title: "Vulnerability Management & IR",
+        description: <>Tenable scanning, CVE triage, patch validation, evidence capture; incident response workflows and containment.</>,
+        tags: [
+          { name: "Tenable", icon: "tenable" },      // add to iconLibrary
+          { name: "Wireshark", icon: "wireshark" },  // add to iconLibrary
+          { name: "LDAP", icon: "server" },
+        ],
+        images: [
+          { src: "/images/projects/project-01/05-kql-and-failed-logons.png", alt: "KQL triage of failed logons", width: 16, height: 9 },
+          { src: "/images/projects/project-01/04-cmd-and-services.jpg", alt: "SFC/DISM repair evidence", width: 16, height: 9 },
+        ],
+      },
+      {
+        title: "Programming & Scripting",
+        description: <>Python automation, PowerShell scripting, JavaScript web apps, HTML/CSS; regex, JSON/webhooks.</>,
+        tags: [
+          { name: "Python", icon: "python" },
+          { name: "PowerShell", icon: "terminal" },
+          { name: "JavaScript", icon: "javascript" },
+        ],
+        images: [
+          { src: "/images/projects/project-01/01-vscode.png", alt: "VS Code with Python game code", width: 16, height: 9 },
+          { src: "/images/projects/project-01/04-code.png", alt: "IntelliPath AI source code example", width: 16, height: 9 },
+        ],
+      },
+      {
+        title: "Cloud & Virtualization",
+        description: <>Azure, Vultr VPC, VMware/Hyper-V basics, VM provisioning, NSGs/firewall rules, honeypot deployments.</>,
+        tags: [
+          { name: "Azure", icon: "microsoft" },
+          { name: "VMware", icon: "cloud" },
+          { name: "Virtualization", icon: "server" },
+        ],
+        images: [
+          { src: "/images/projects/project-01/00-rg-soc-lab.png", alt: "Azure SOC resource group", width: 16, height: 9 },
+          { src: "/images/projects/project-01/04-uf-install.png", alt: "Splunk UF install on Windows host", width: 16, height: 9 },
+        ],
+
+      },
+      {
+        title: "AI & Data Tools",
+        description: <>ChatGPT/Copilot workflows, transcript summarization, structured note gen, basic SQL/Excel analysis, Supabase.</>,
+        tags: [
+          { name: "Supabase", icon: "supabase" },
+          { name: "SQL", icon: "database" },       // add to iconLibrary
+          { name: "Excel", icon: "excel" },        // add to iconLibrary
+        ],
+        images: [
+          { src: "/images/projects/project-01/02-video-screen.png", alt: "IntelliPath AI video transcript screen", width: 16, height: 9 },
+          { src: "/images/projects/project-01/05-supabase.png", alt: "Supabase database integration", width: 16, height: 9 },
+        ],
+      },
     ],
   },
 };
@@ -231,8 +314,8 @@ const about: About = {
 const blog: Blog = {
   path: "/blog",
   label: "Blog",
-  title: "Writing about design and tech...",
-  description: `Read what ${person.name} has been up to recently`,
+  title: "Cybersecurity & IT Write-ups",
+  description: `Posts and reflections from ${person.name} on labs, challenges, and lessons learned.`,
   // Create new blog posts by adding a new .mdx file to app/blog/posts
   // All posts will be listed on the /blog route
 };
@@ -241,7 +324,7 @@ const work: Work = {
   path: "/work",
   label: "Work",
   title: `Projects – ${person.name}`,
-  description: `Design and dev projects by ${person.name}`,
+  description: `Hands-on IT & Cybersecurity projects built by ${person.name}`,
   // Create new project pages by adding a new .mdx file to app/blog/posts
   // All projects will be listed on the /home and /work routes
 };
@@ -250,50 +333,33 @@ const gallery: Gallery = {
   path: "/gallery",
   label: "Gallery",
   title: `Photo gallery – ${person.name}`,
-  description: `A photo collection by ${person.name}`,
+  description: `A mix of project screenshots, diagrams, and photos by ${person.name}`,
   // Images by https://lorant.one
   // These are placeholder images, replace with your own
   images: [
-    {
-      src: "/images/gallery/horizontal-1.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/vertical-4.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-    {
-      src: "/images/gallery/horizontal-3.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/vertical-1.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-    {
-      src: "/images/gallery/vertical-2.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-    {
-      src: "/images/gallery/horizontal-2.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/horizontal-4.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/vertical-3.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
+    // AD SIEM + SOAR (architecture → proof)
+    { src: "/images/projects/project-01/00-Architecture.png", alt: "AD SIEM+SOAR architecture diagram", orientation: "horizontal" },
+    { src: "/images/projects/project-01/10-slack-alert.png", alt: "Slack confirmation after SOAR action", orientation: "horizontal" },
+
+    // SOC Honeypot (Azure + Sentinel)
+    { src: "/images/projects/project-01/00-cover-attack-map.png", alt: "Microsoft Sentinel global attack map", orientation: "horizontal" },
+    { src: "/images/projects/project-01/05-kql-and-failed-logons.png", alt: "KQL query and failed logons aggregation", orientation: "horizontal" },
+
+    // Windows Recovery (Error 1962)
+    { src: "/images/projects/project-01/00-error1962.jpg", alt: "Error 1962: No Operating System Found", orientation: "horizontal" },
+    { src: "/images/projects/project-01/01-bios-main.jpg", alt: "BIOS/UEFI main screen during recovery", orientation: "horizontal" },
+
+    // IntelliPath AI (in progress)
+    { src: "/images/projects/project-01/00-home.png", alt: "IntelliPath AI home view", orientation: "horizontal" },
+    { src: "/images/projects/project-01/03-flow-chart.png", alt: "IntelliPath AI processing flow chart", orientation: "horizontal" },
+
+    // Astray: Lost Kingdoms (in progress)
+    { src: "/images/projects/project-01/00-home-screen.png", alt: "Astray: Lost Kingdoms title screen", orientation: "horizontal" },
+    { src: "/images/projects/project-01/02-sprite-design.png", alt: "Pixel sprite design for Astray", orientation: "horizontal" },
+
+    // Extra AD/SIEM context (optional spice)
+    { src: "/images/projects/project-01/06-search-results.png", alt: "Splunk search for successful RDP events", orientation: "horizontal" },
+    { src: "/images/projects/project-01/08-shuffle-workflow.png", alt: "Shuffle SOAR workflow with approval → LDAP", orientation: "horizontal" },
   ],
 };
 

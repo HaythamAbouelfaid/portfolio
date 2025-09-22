@@ -1,0 +1,125 @@
+---
+title: "Active Directory 2.0: SIEM + SOAR Auto-Response (Splunk, Slack, Shuffle)"
+publishedAt: "2025-09-17"
+summary: "Built an end-to-end detection-to-response pipeline: Splunk detects unauthorized successful RDP logins, Shuffle collects analyst approval by email, then disables the domain account in AD via LDAP and confirms in Slack."
+images:
+  - "/images/projects/project-01/00-Architecture.png"
+  - "/images/projects/project-01/01-ad-ds-install.png"
+  - "/images/projects/project-01/02-create-user.png"
+  - "/images/projects/project-01/03-grant-rdp.png"
+  - "/images/projects/project-01/04-uf-install.png"
+  - "/images/projects/project-01/05-splunk-ubuntu.png"
+  - "/images/projects/project-01/06-search-results.png"
+  - "/images/projects/project-01/07-save-alert.png"
+  - "/images/projects/project-01/08-shuffle-workflow.png"
+  - "/images/projects/project-01/09-email-approval.png"
+  - "/images/projects/project-01/10-slack-alert.png"
+  - "/images/projects/project-01/11-aduc-proof.png"
+
+team:
+  - name: "Haytham Abouelfaid"
+    role: "IT & Cybersecurity Student"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/haytham-abouelfaid"
+link: "https://lnkd.in/p/dY-ct8dQ"
+---
+
+## Overview
+
+I built a compact blue-team pipeline that turns a **successful offsite RDP login** into a **guided, one-click containment** action:
+
+1) **Detect** unauthorized successful Windows logons in **Splunk** (Event ID **4624**, LogonType **7/10**).  
+1) **Notify** in **Slack** with user, host, source IP, and time.  
+3) **Approve** via **Shuffle** User Input email (Yes/No).  
+4) **Contain** automatically in **Active Directory**: disable the user via **LDAP**.  
+5) **Confirm** in Slack and verify in ADUC.
+
+**Why this matters:** In a SOC, shaving minutes off detection and response for identity-based attacks is critical. This workflow reduces **MTTD/MTTR**, enforces **human-in-the-loop** governance for identity actions, and demonstrates practical **SIEM + SOAR + IAM** integration.
+
+---
+
+## Key Features
+
+- **Cloud lab topology (VPC):**  
+  - Windows Server 2025 **Domain Controller** (AD DS), Windows Server 2025 **Test VM**, and **Ubuntu 22.04** Splunk server on isolated VPC.  
+  - Host & cloud firewalls tuned for 3389 (RDP), 8000 (Splunk Web), and 9997 (Splunk receiving).
+
+- **Active Directory setup:**  
+  - Promoted DC; domain **MyDFIR.local**.  
+  - Created **Jenny Smith (JSmith)** test user; enabled **RDP access** on the Test VM for domain users.  
+  - Verified domain joins and sign-in behavior (`MYDFIR\JSmith` vs local account context).
+  
+- **Splunk ingestion & detection:**  
+  - Installed **Splunk Enterprise** on Ubuntu; set TZ to GMT; added **Splunk Add-on for Microsoft Windows**.  
+  - Created index `mydfir-ad`; enabled receiving on **:9997**.  
+  - Deployed **Universal Forwarder** on both Windows hosts; added:
+    ```conf
+    # inputs.conf (local)
+    [WinEventLog://Security]
+    index = mydfir-ad
+    disabled = 0
+    ```
+  - **SPL detection** for successful RDP logons (offsite):
+    ```spl
+    index=mydfir-ad EventCode=4624 (Logon_Type=7 OR Logon_Type=10)
+    Source_Network_Address=* Source_Network_Address!="-"
+    | eval human_time=strftime(_time,"%Y-%m-%d %H:%M:%S %Z")
+    | stats count by _time, human_time, ComputerName, Source_Network_Address, user, Logon_Type
+    ```
+  - Saved as scheduled alert **“MyDFIR-Unauthorized-Successful-Login-RDP”** (ran every minute during testing).
+
+- **Slack alerting:**  
+  - Slack workspace + **#alerts** channel.  
+  - Message template (from Shuffle) with runtime args:
+    ```
+    Alert: $exec.search_name
+    Time:  $exec.result.human_time
+    User:  $exec.result.user
+    Source IP: $exec.result.Source_Network_Address
+    ```
+  - Used **channel ID** to route reliably to #alerts.
+
+- **Shuffle SOAR workflow (human-in-the-loop):**  
+  - **Webhook (from Splunk)** → **Slack alert** → **User Input (Email Yes/No)** → **Active Directory: Disable User** → **Get User Attributes** → **Condition** → **Slack confirmation**.  
+  - **LDAP** details: host (DC), port **389**, `useSSL=false` (testing), Base DN `CN=Users,DC=MyDFIR,DC=local`.  
+  - **Account mapping:** normalized `$exec.result.user` to **sAMAccountName** (e.g., `JSmith`) to avoid domain prefix issues (`MYDFIR\JSmith`).  
+  - **Post-action verification:** parsed user attributes and matched **userAccountControl** state (or attribute blob contains `ACCOUNTDISABLE`) before sending Slack success message.
+
+- **Proof of remediation:**  
+  - Final **Slack** message: “**Account JSmith has been disabled.**”  
+  - **ADUC** screenshot shows the **down-arrow** on the user icon and **“Enable account”** in the context menu.
+
+---
+
+## Technologies Used
+
+- **Windows & AD:** Windows Server 2022, AD DS, ADUC, LDAP (389).  
+- **Linux & SIEM:** Ubuntu 22.04, Splunk Enterprise, Splunk Add-on for Microsoft Windows, Universal Forwarder.  
+- **SOAR & Messaging:** Shuffle (webhooks, user input, app actions), Slack API (chat.postMessage).  
+- **Networking & Security:** VPC networking, RDP (3389), UFW rules, role-based access (email approvals), least-privilege after testing.  
+- **Detection Engineering:** Windows Event IDs (4624), Logon Types (7/10), SPL authoring, alert scheduling, runtime arg templating.  
+- **Evidence & Ops:** Run logs, Explore Runs, Slack channel IDs, sanitized screenshots.
+
+---
+
+## Challenges and Learnings
+
+- **OAuth & Slack scopes:** Resolved `invalid_scope` and `not_in_channel` by using correct **chat:write** scope and posting via **channel ID** with the bot **invited** to #alerts.  
+- **Webhook vs “Play” runs (Shuffle):** To pass runtime args (`$exec.*`), I triggered from the **Webhook** start node; manual Play runs skip nodes or lack payloads.  
+- **LDAP bind & policy errors:** Encountered `strongerAuthRequired`; for testing, used **389 / no SSL** and a temporary **privileged test account** to validate binding (then reverted).  
+- **Username normalization:** `$exec.result.user` sometimes arrives as `MYDFIR\JSmith`. Mapping to **sAMAccountName=JSmith** fixed “No user found” errors.  
+- **Sequencing & conditions:** Ensured the **Slack confirmation** only fires **after** attributes show the disabled state (checked `userAccountControl`/attribute text).  
+- **Security hygiene:** Opened RDP and Splunk ports narrowly; widened briefly for test signal; **locked down** after validation. Sanitized **public IPs, channel IDs, webhook IDs, emails** in screenshots.
+
+**Takeaway:** Building a reliable IR automation isn’t just wiring tools—it’s **data normalization, policy awareness, and safe defaults** with explicit approval points.
+
+---
+
+## Outcome
+
+- **Operational flow:** Unauthorized successful RDP logins are detected within a minute, surfaced to Slack with context, approved by email, and **contained** by disabling the AD user—then **verified** and **announced**.  
+- **SOC value:** Converts a noisy identity tactic into a **repeatable, governed playbook**, improving **MTTD/MTTR** and reducing reliance on ad-hoc manual steps.  
+- **Next steps:**  
+  - Add **IP reputation enrichment** pre-approval to aid triage.  
+  - Implement **LDAPS (636) with certs** and a **service account** scoped for disable-only.  
+  - Extend to **re-enable** flow with ticket linkage and **post-incident** checks (MFA, password reset, device health).

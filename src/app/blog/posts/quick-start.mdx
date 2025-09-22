@@ -1,46 +1,117 @@
 ---
-title: "Quick start with Magic Portfolio"
-summary: "Magic Portfolio is a comprehensive, MDX-based, SEO-friendly, responsive portfolio template built with Once UI and Next.js."
-image: "/images/gallery/horizontal-1.jpg"
-publishedAt: "2025-04-23"
-tag: "Magic Portfolio"
+title: "What I Learned Building My First SOC Labs (Splunk, Sentinel, and AD)"
+summary: "Two real labs, one mindset shift: an AD SIEM+SOAR auto-response pipeline (Splunk → Slack/Shuffle → LDAP) and a Microsoft Sentinel honeypot that captured 44K+ brute-force attempts in hours."
+image: "/images/projects/project-01/00-cover-attack-map.png"
+publishedAt: "2025-09-21"
+tag: "SOC Labs"
 ---
 
-## About
+## Why I Built These Labs
 
-Magic Portfolio is a comprehensive, MDX-based, SEO-friendly, responsive portfolio template built with Once UI and Next.js.
+I wanted hands-on SOC experience that goes beyond theory. So I built two labs:
+- **Active Directory 2.0 — SIEM + SOAR Auto-Response**: Splunk detects a risky *successful* RDP login, Shuffle asks an analyst for approval, then disables the AD user via LDAP and confirms in Slack.
+- **Cloud SOC Honeypot (Microsoft Sentinel)**: An intentionally exposed Windows VM in Azure feeding Log Analytics and Sentinel, enriched with GeoIP, visualized on a live global attack map.
 
-## License
+These taught me how **detection engineering**, **workflow governance**, and **incident response hygiene** fit together.
 
-Magic Portfolio is licensed under the [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). You can only use it for personal purposes, and you must attribute the original work. The attribution is added in the footer by default, but you can place it in any other, visible part of your site.
+---
 
-Subscribe to the [Once UI Pro plan](https://once-ui.com/pricing) to extend the license to [Dopler CC](https://once-ui.com/products/magic-portfolio).
+## Lab #1 — AD SIEM + SOAR Auto-Response (Splunk, Slack, Shuffle)
 
-## Quick start
+**Architecture (compact cloud lab):**
+- Windows Server DC (AD DS) + Windows test server
+- Ubuntu Splunk Enterprise (custom index `mydfir-ad`, Windows Add-on, UF on both Windows hosts)
+- Slack (#alerts) for notifications, Shuffle for email approval and LDAP action
 
-Clone the git repository:
-
-<CodeBlock compact marginBottom="16" codes={[
-  {
-    code: "git clone https://github.com/once-ui-system/magic-portfolio.git",
-    language: "bash"
-  }
-]} />
-
-Install the necessary dependencies:
+**Detection logic (Splunk SPL):**
 
 <CodeBlock compact marginBottom="16" codes={[
   {
-    code: "npm install",
-    language: "bash"
+    code: `index=mydfir-ad EventCode=4624 (Logon_Type=7 OR Logon_Type=10)
+Source_Network_Address!="-"
+Source_Network_Address!="40.*"
+| eval human_time=strftime(_time,"%Y-%m-%d %H:%M:%S %Z")
+| stats count by _time, human_time, ComputerName, Source_Network_Address, user, Logon_Type`,
+    language: "splunk-spl"
   }
 ]} />
 
-Start the local development server:
+Saved as alert **MyDFIR-Unauthorized-Successful-Login-RDP** (ran every minute during testing).
+
+**Human-in-the-loop SOAR flow:**
+1. Splunk → Webhook → **Shuffle**
+2. Shuffle → **Slack alert** (user, host, source IP, time)
+3. Shuffle → **Email form** → “Disable this account?”
+4. If **Yes** → **LDAP disable** (AD user), then **verify** `userAccountControl` shows disabled
+5. Shuffle → **Slack confirmation** (“Account JSmith has been disabled.”). If **No**, end.
+
+**What this proves:** auto-response **with governance**. We keep a decision gate to avoid false positives causing lockouts, and we verify before we celebrate.
+
+**Screenshots:**  
+![Splunk detection](/images/projects/project-01/06-search-results.png)  
+![Shuffle workflow](/images/projects/project-01/08-shuffle-workflow.png)  
+![Slack alert](/images/projects/project-01/10-slack-alert.png)
+
+---
+
+## Lab #2 — Cloud SOC Honeypot (Microsoft Sentinel on Azure)
+
+**What I deployed:**
+- Windows 10 honeypot VM in Azure; Windows Firewall relaxed and NSG opened (RDP 3389 and others) to attract brute-force attempts
+- Logs→ **Log Analytics Workspace** → **Microsoft Sentinel**
+- **KQL** for detection + **GeoIP enrichment** (watchlist) + **workbook attack map**
+
+**KQL snippet (failed logons 4625 + basic aggregation):**
 
 <CodeBlock compact marginBottom="16" codes={[
   {
-    code: "npm run dev",
-    language: "bash"
+    code: `SecurityEvent
+| where EventID == 4625
+| summarize count() by IpAddress=tostring(ComputerIP)`,
+    language: "kusto"
   }
 ]} />
+
+**Result:** In ~7 hours, I saw **44,000+ failed logons** from around the world (Canada, U.S., Netherlands, Poland, Japan, Argentina, Australia, Russia). Visualizing it made the volume and spread obvious.
+
+**Screenshots:**  
+![Attack map](/images/projects/project-01/00-cover-attack-map.png)  
+![KQL & failed logons](/images/projects/project-01/05-kql-and-failed-logons.png)
+
+---
+
+## Troubleshooting Wins (aka the painful but useful bits)
+
+- **Slack scopes & routing:** Fixed `invalid_scope` / `not_in_channel` by adding `chat:write` and posting via **channel ID** (and inviting the bot).
+- **LDAP quirks:** For testing, used port **389** (no SSL) with correct Base DN `CN=Users,DC=MyDFIR,DC=local`; normalized `MYDFIR\\JSmith` → `sAMAccountName=JSmith`.
+- **Shuffle payloads:** Webhook-triggered runs carry `$exec.*` runtime args; “Play” runs don’t—so testing the real path matters.
+- **Signal vs noise in Sentinel:** Large 4625 volume demanded filtering and enrichment to keep queries and workbooks responsive.
+
+---
+
+## What I Learned (and why it matters in a SOC)
+
+- **Detection isn’t enough** — you need **triage context** (enrichment, allowlists) and **governance** (human approval) before identity actions.
+- **Automation needs verification** — post-action checks (e.g., `userAccountControl`) prevent “automation theater.”
+- **Cloud exposure is real** — honeypots get hammered fast. Visuals (attack maps) help communicate risk to non-technical folks.
+- **Repeatability wins** — codifying queries, alerts, workflows turns reactive steps into a **playbook** that cuts **MTTD/MTTR**.
+
+---
+
+## What I’d Build Next
+
+- **LDAPS (636) + certs** for the disable action; move to a **least-privilege service account**.
+- **Risk scoring before approval**: GeoIP + reputation and frequency to inform the analyst decision.
+- **Burst control**: throttle/aggregate duplicate alerts; one approval can cover a wave.
+- **Re-enable flow** tied to ticketing + post-incident tasks (MFA reset, password rotation, device checks).
+
+---
+
+## Credits / Tools I Used
+
+**AD & Windows:** Windows Server (AD DS), ADUC, LDAP  
+**SIEM/SOAR:** Splunk Enterprise, Universal Forwarder, Microsoft Sentinel, Shuffle  
+**Cloud:** Azure VM + NSG, Log Analytics Workspace  
+**Messaging:** Slack API (channel IDs, `chat.postMessage`)  
+**Detection:** Windows Event IDs (4624/4625), KQL, SPL
+
