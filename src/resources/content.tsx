@@ -1,5 +1,5 @@
 import { About, Blog, Gallery, Home, Newsletter, Person, Social, Work } from "@/types";
-import { Line, Logo, Row, Text } from "@once-ui-system/core";
+import { Line, Row, Text } from "@once-ui-system/core";
 
 const person: Person = {
   firstName: "Haytham",
@@ -44,7 +44,7 @@ const home: Home = {
   label: "Home",
   title: `${person.name}'s Portfolio`,
   description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>Turning technical knowledge into real-word IT & cybersecurity solutions</>,
+  headline: <>Turning technical knowledge into real-word IT & Cybersecurity solutions</>,
   featured: {
     display: true,
     title: (
@@ -60,13 +60,8 @@ const home: Home = {
   },
   subline: (
     <>
-      I'm Haytham Abouelfaid, an IT & Cybersecurity student at *Northern Virginia Community College*
-      <Logo
-        dark
-        icon="/trademarks/wordmark-dark.svg"
-        style={{ display: "inline-flex", top: "0.25em", marginLeft: "-0.25em" }}
-      />
-      , building hands-on projects in Active Directory, SIEM, SOAR, and Cloud Security to
+      I'm Haytham Abouelfaid, an IT & Cybersecurity student at Northern Virginia Community College,
+      building hands-on projects in Active Directory, SIEM, SOAR, and Cloud Security to
       replicate real-world environments.
       <br /> user experiences. After hours, I build my own projects.
     </>
