@@ -60,7 +60,7 @@ const home: Home = {
   },
   subline: (
     <>
-      I'm Haytham Abouelfaid, an IT & Cybersecurity student at{" "}
+      I'm Haytham Abouelfaid, an IT & Cybersecurity student at *Northern Virginia Community College*
       <Logo
         dark
         icon="/trademarks/wordmark-dark.svg"
@@ -127,13 +127,13 @@ const about: About = {
           // optional: leave the array empty if you don't want to display images
           {
             src: "/images/projects/project-01/cover-cs-rising.jpg",
-            alt: "Once UI Project",
+            alt: "CS Rising Project",
             width: 16,
             height: 9,
           },
           {
             src: "/images/projects/project-01/1-cs-project.jpg",
-            alt: "Once UI Project",
+            alt: "CS Rising Project",
             width: 16,
             height: 9,
           },        
@@ -173,25 +173,25 @@ const about: About = {
           // optional: leave the array empty if you don't want to display images
           {
             src: "/images/projects/project-01/cshs-uva.jpg",
-            alt: "Once UI Project",
+            alt: "CSHS UVA Coding Competition",
             width: 16,
             height: 9,
           },
           {
             src: "/images/projects/project-01/cshs-cyberslam-1.jpg",
-            alt: "Once UI Project",
+            alt: "CSHS CyberSlam Competition",
             width: 16,
             height: 9,
           }, 
           {
             src: "/images/projects/project-01/cshs-cyberslam.jpg",
-            alt: "Once UI Project",
+            alt: "CSHS CyberSlam Competition",
             width: 16,
             height: 9,
           },  
           {
             src: "/images/projects/project-01/cshs-volunteer.jpg",
-            alt: "Once UI Project",
+            alt: "CShS Volunteer Teaching Kids",
             width: 16,
             height: 9,
           },            
