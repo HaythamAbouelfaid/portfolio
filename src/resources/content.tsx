@@ -101,6 +101,26 @@ const about: About = {
     title: "Experience",
     experiences: [
       {
+        company: "Loudoun County Public Schools",
+        timeframe: "Oct 2025 - Present",
+        role: "Substitute Teacher",
+        achievements: [
+          <>
+            Adapt quickly to new classrooms and technology setups (Windows laptops, SmartBoards, Chromebooks), ensuring seamless continuity of instruction.
+          </>,
+          <>
+            Follow structured lesson plans similar to IT runbooks, troubleshooting classroom challenges, and adjusting workflows to maintain productivity.
+          </>,
+          <>
+            Communicate technical and non-technical instructions clearly to diverse groups of students, mirroring IT support and training scenarios.
+          </>,
+          <>
+            Document and relay daily activity reports (lessons covered, issues encountered) to permanent staff, demonstrating incident reporting and knowledge transfer skills.
+          </>,
+        ],
+        images: [],
+      },
+      {
         company: "Loudoun County Public Schools & AWS",
         timeframe: "June 2025 - July 2025",
         role: "IT & CS Rising Intern",
