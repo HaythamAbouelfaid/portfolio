@@ -1,0 +1,130 @@
+---
+title: "SOAR + EDR Automated Incident Response (LimaCharlie, Tines, Slack, HTML Email)"
+publishedAt: "2025-10-20"
+summary: "Developed a fully automated detection-to-isolation workflow: LimaCharlie detects suspicious activity, Tines generates Slack and email alerts, collects analyst approval, and isolates the endpoint via API—confirming success in Slack."
+images:
+  - "/images/projects/project-01/0_Workflow_Tines_Full.png"
+  - "/images/projects/project-01/1_LimaCharlie_Install_VM.png"
+  - "/images/projects/project-01/2_LimaCharlie_Service_Running.png"
+  - "/images/projects/project-01/3_Install_LaZagne_Executable.png"
+  - "/images/projects/project-01/4_PowerShell_Run_LaZagne.png"
+  - "/images/projects/project-01/5_LimaCharlie_Event_Triggered.png"
+  - "/images/projects/project-01/6_Tines_Detection_Summary_Prompt.png"
+  - "/images/projects/project-01/7_HTML_Email_Notification.png"
+  - "/images/projects/project-01/8_Slack_Alert_Channel.png"
+  - "/images/projects/project-01/9_LimaCharlie_Rules_Detection_Response.png"
+  - "/images/projects/project-01/10_VM_Ping_Before_After_Isolation.png"
+  - "/images/projects/project-01/11_LimaCharlie_Sensor_Isolated.png"
+
+team:
+  - name: "Haytham Abouelfaid"
+    role: "IT & Cybersecurity Student"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/haytham-abouelfaid"
+link: "https://www.linkedin.com/posts/haytham-abouelfaid_cybersecurity-soar-edr-activity-7386038435674832896-RyHI?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFEuTr4BW4yWbOwEURzQZqRVgPv3NMnnV8Q"
+---
+
+## Overview
+
+I built a **SOAR + EDR automation pipeline** that simulates a real-world SOC incident-response flow — from detection to containment — using **LimaCharlie**, **Tines**, **Slack**, and **HTML email notifications**.  
+
+This project demonstrates a **human-in-the-loop automated response** workflow where LimaCharlie detects malicious behavior (like a LaZagne credential-dump attempt), Tines sends structured alerts to Slack and email, requests analyst approval, and—on confirmation—isolates the endpoint automatically through the LimaCharlie API.
+
+**Why this matters:**  
+Modern SOC environments rely on automation to reduce response times without removing analyst oversight. This workflow merges **EDR telemetry**, **SOAR orchestration**, and **analyst decision gates** to achieve both **speed** and **control** in containment.
+
+---
+
+## Key Features
+
+- **Detection-to-isolation pipeline:**  
+  - A detection event in **LimaCharlie** (credential-dump activity) is streamed to **Tines** via webhook for automation.  
+  - Tines builds and sends:
+    1. A formatted **Slack alert** with detection details (host, IP, user, file path, command line).  
+    2. A styled **HTML email** summary to the analyst for context.  
+    3. An **approval prompt** (Yes/No) to decide whether to isolate the host.  
+  - On “Yes,” the workflow calls the **LimaCharlie API** to isolate the machine, then confirms success in Slack.  
+
+- **Human-in-the-loop SOAR design:**  
+  - Prevents false positives by ensuring analysts manually authorize containment.  
+  - Tracks analyst decisions through structured response logging in Tines.  
+
+- **Slack integration:**  
+  - Slack API sends both initial detection alerts and isolation status updates.  
+  - Custom formatted messages display:
+    ```
+    Title: MyDFIR - HackTool - LaZagne
+    Computer: mydfir-soar-edr
+    Source IP: 149.28.234.5
+    File Path: C:\Users\Administrator\Downloads\LaZagne.exe
+    Command Line: "C:\Users\Administrator\Downloads\LaZagne.exe"
+    ```
+  - Automated follow-ups confirm:  
+    - ✅ “Isolation: true — endpoint successfully isolated.”  
+    - ⚠️ “Not isolated — analyst review required.”
+
+- **EDR rules in LimaCharlie:**  
+  - Custom **D&R rule** detects LaZagne usage via:
+    - File path ending with `LaZagne.exe`  
+    - Command line containing “LaZagne”  
+    - Known SHA256 hash match  
+  - Automatically reports to the org detection stream for webhook forwarding.
+
+- **Email alert templating:**  
+  - Designed a **custom HTML email** (Abouelfaid SOAR-EDR template) for clean incident reporting:  
+    - Includes title, host, IP, file path, command line, sensor ID, and direct detection link.  
+    - Styled with consistent colors and spacing for professional presentation.
+
+- **Isolation verification:**  
+  - Tines retrieves and displays the isolation status via API after the action completes.  
+  - Validation confirmed by “General failure” in ping tests and *Isolated* status in LimaCharlie dashboard.
+
+---
+
+## Technologies Used
+
+- **EDR Platform:** LimaCharlie (agent installation, D&R rules, isolation API).  
+- **SOAR Orchestration:** Tines (webhook ingestion, conditional branching, runtime variables).  
+- **Communication Tools:** Slack API (chat.postMessage), Gmail SMTP (HTML email delivery).  
+- **OS & VM Environment:** Windows 11 VM (test endpoint), LimaCharlie agent (x64), Vultr cloud network.  
+- **Programming & Formatting:** JSON payloads, HTML/CSS for emails, conditional expressions in Tines.  
+- **Detection Simulation:** LaZagne credential-dump tool executed on test endpoint to trigger workflow.  
+
+---
+
+## Challenges and Learnings
+
+- **API authentication:**  
+  - Resolved token expiry (`invalid jwt`) by switching from temporary JWTs to **long-lived org API keys**.  
+
+- **Conditional workflow branching:**  
+  - Designed **parallel Yes/No isolation flows** with unified post-action logging.  
+
+- **Slack formatting:**  
+  - Adjusted JSON formatting for consistent line breaks and color-coded message sections.  
+
+- **Email formatting:**  
+  - Built responsive HTML templates compatible with Gmail and Outlook rendering engines.  
+
+- **Webhook validation:**  
+  - Tested payload handling with nested JSON fields to ensure correct variable resolution in Tines.  
+
+**Takeaway:**  
+Creating a robust detection-to-containment pipeline requires more than automation — it demands **integration accuracy**, **API reliability**, and **clear human oversight**. Each component (EDR, SOAR, Slack, Email) must synchronize to deliver a secure, verifiable incident workflow.
+
+---
+
+## Outcome
+
+- **Operational workflow:**  
+  - Detection → Alert → Approval → Isolation → Confirmation all executed automatically within seconds.  
+  - Analyst decision captured via form and validated in real-time.
+
+- **SOC value:**  
+  - Demonstrates a **fully orchestrated incident response** loop — detection in LimaCharlie, decision-making in Tines, and containment through automation.  
+  - Reduces **MTTR** by eliminating manual steps while maintaining analyst governance.
+
+- **Next steps:**  
+  - Add enrichment using **IP reputation and threat intel APIs** before isolation.  
+  - Implement **multi-alert correlation** to reduce noise.  
+  - Extend automation to include **un-isolation workflows** for post-incident recovery.

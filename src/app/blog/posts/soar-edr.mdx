@@ -1,0 +1,99 @@
+---
+title: "Building a SOAR + EDR Automated Incident Response Lab (LimaCharlie, Tines, Slack)"
+summary: "Created a real-world SOC automation pipeline combining LimaCharlie EDR, Tines SOAR, and Slack to detect, alert, and isolate compromised endpoints with analyst approval in the loop."
+image: "/images/projects/project-01/0_Workflow_Tines_Full.png"
+publishedAt: "2025-10-20"
+tag: "SOC Automation"
+---
+
+## Why I Built This Project
+
+After completing my Active Directory SIEM + SOAR automation and Microsoft Sentinel honeypot labs, I wanted to simulate a **modern SOC’s automated detection-to-response workflow** — combining endpoint detection, orchestration, and human decision-making.
+
+The goal was simple: build an **end-to-end SOAR + EDR lab** that could **detect**, **alert**, **request analyst approval**, and **isolate** a host in real time.
+
+This became my **SOAR + EDR Automated Incident Response** project — integrating **LimaCharlie EDR**, **Tines SOAR**, **Slack API**, and **HTML email notifications** into a cohesive, production-style workflow.
+
+---
+
+## Lab Overview — How It Works
+
+**Flow Summary:**
+1. **LimaCharlie EDR** detects a credential-dumping attempt (using *LaZagne.exe*).
+2. The detection sends data via webhook to **Tines SOAR**.
+3. **Tines** automatically:
+   - Sends a **Slack alert** to `#alerts` with formatted fields (host, file, IP, and detection type).
+   - Sends an **HTML email** with detection details and a link to isolate.
+   - Waits for the analyst’s approval (“Isolate this endpoint?”).
+4. On approval (**Yes**), **Tines** calls the **LimaCharlie API** to isolate the sensor.
+5. Finally, it verifies isolation and posts a **Slack confirmation message**.
+
+---
+
+## Architecture Diagram
+
+**Stack:**
+- **EDR:** LimaCharlie (detection & response automation)
+- **SOAR:** Tines (workflow orchestration)
+- **Messaging:** Slack (alerts & confirmation)
+- **Email:** Gmail SMTP (HTML-styled notifications)
+- **Environment:** Windows 11 VM on Vultr (monitored by LimaCharlie agent)
+
+**Workflow summary:**  
+EDR event → SOAR webhook → Slack alert & email → Analyst approval → API isolation → Slack confirmation.
+
+**Screenshot:**  
+![Workflow overview](/images/projects/project-01/0_Workflow_Tines_Full.png)
+
+---
+
+## Detection Engineering — EDR Rules in LimaCharlie
+
+I built a **Detection & Response (D&R) rule** in LimaCharlie to flag **LaZagne.exe**, a post-exploitation credential dumper.  
+The rule matches on filename, command-line string, and hash values.
+
+**Key fields:**
+- `event/FILE_CREATE` or `event/PROCESS_CREATE`
+- Condition: `"LaZagne"` in file path or command line
+- Response: send detection event to the connected **Tines webhook**
+
+**Screenshot:**  
+![LimaCharlie D&R rule](/images/projects/project-01/9_LimaCharlie_Rules_Detection_Response.png)
+
+When executed on the test VM, the LimaCharlie agent immediately triggered an alert visible in the event log.
+
+**Screenshot:**  
+![Detection triggered in LimaCharlie](/images/projects/project-01/5_LimaCharlie_Event_Triggered.png)
+
+---
+
+## SOAR Logic — Tines Workflow Breakdown
+
+**Tines Workflow (6-step chain):**
+1. **Webhook** (incoming LimaCharlie detection)
+2. **Send to Slack** → alert message with host, file path, and IP
+3. **Send Email (HTML)** → summary + isolation prompt
+4. **Prompt (Yes/No)** → analyst decision
+5. **If Yes → Isolate host via LimaCharlie API**
+6. **Post confirmation back to Slack**
+
+The entire workflow is modular — reusable for any detection source.
+
+**Screenshots:**  
+![Analyst prompt in Tines](/images/projects/project-01/6_Tines_Detection_Summary_Prompt.png)  
+![HTML email notification](/images/projects/project-01/7_HTML_Email_Notification.png)
+
+---
+
+## Slack Integration — Alerts & Confirmation
+
+Slack was the analyst’s **primary notification hub**.  
+Using the `chat.postMessage` API, Tines posts structured JSON messages with detection fields:
+
+```json
+{
+  "text": "*Abouelfaid - HackTool - LaZagne*",
+  "blocks": [
+    { "type": "section", "text": { "type": "mrkdwn", "text": "*Host:* mydfir-soar-edr\n*File:* C:\\Users\\Admin\\Downloads\\LaZagne.exe\n*IP:* 149.28.234.5\n*Action:* Isolate?" } }
+  ]
+}

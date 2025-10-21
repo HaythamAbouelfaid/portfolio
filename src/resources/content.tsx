@@ -49,14 +49,14 @@ const home: Home = {
     display: true,
     title: (
       <Row gap="12" vertical="center">
-        <strong className="ml-4">Active Directory SIEM + SOAR Automation</strong>{" "}
+        <strong className="ml-4">SOAR + EDR Automated Incident Response</strong>{" "}
         <Line background="brand-alpha-strong" vert height="20" />
         <Text marginRight="4" onBackground="brand-medium">
           Featured Project
         </Text>
       </Row>
     ),
-    href: "/work/active-directory-siem-soar-automation",
+    href: "/work/soar-edr-automated-incident-response",
   },
   subline: (
     <>
@@ -90,7 +90,7 @@ const about: About = {
     description: (
       <>
         Haytham is a U.S.-based IT & Cybersecurity student at Northern Virginia Community College
-        (transfer path to George Mason University). Certified in Google IT Support, AI Essentials,
+        (transfer path to George Mason University). Certified in Google IT Support, Cybersecurity, AI Essentials,
         and Microsoft Security, he is passionate about system recovery, cloud security, SIEM/SOAR,
         and building labs that simulate enterprise-level security environments.
       </>
@@ -230,12 +230,12 @@ const about: About = {
     title: "Studies",
     institutions: [
       {
-        name: "Northen Virginia Community College",
-        description: <>Associate of Science in Information Technology (2025–2027).</>,
+        name: "Northern Virginia Community College",
+        description: <>Associate of Science in Information Technology (2025–2026).</>,
       },
       {
         name: "George Mason University",
-        description: <>B.S. Information Technology, Cybersecurity concentration (Transfer).</>,
+        description: <>B.S. Information Technology, Cybersecurity Concentration (Transfer: 2027-2029).</>,
       },
     ],
   },
@@ -245,20 +245,37 @@ const about: About = {
     skills: [
       {
         title: "Cybersecurity",
-        description: <>SIEM (Splunk, Microsoft Sentinel), SOAR (Shuffle), log analysis, detection engineering, AD hardening.</>,
+        description: (
+          <>
+            SIEM (Splunk, Microsoft Sentinel), SOAR (Shuffle, Tines), log analysis, detection engineering,
+            AD hardening, and EDR automation using LimaCharlie. Built end-to-end pipelines that detect
+            malicious activity, alert analysts via Slack and email, and automatically isolate or disable
+            compromised accounts with human-in-the-loop control.
+          </>
+        ),
         tags: [
           { name: "Splunk", icon: "splunk" },
           { name: "Sentinel", icon: "microsoft" },
+          { name: "LimaCharlie", icon: "shield" },     // add to your icon library if not present
+          { name: "Tines", icon: "workflow" },          // add to your icon library if not present
           { name: "Active Directory", icon: "windows" },
         ],
         images: [
-          { src: "/images/projects/project-01/06-search-results.png", alt: "Splunk detection search results", width: 16, height: 9 },
-          { src: "/images/projects/project-01/00-cover-attack-map.png", alt: "Microsoft Sentinel attack map", width: 16, height: 9 },
+          { src: "/images/projects/project-01/0_Workflow_Tines_Full.png", alt: "SOAR + EDR full workflow diagram", width: 16, height: 9 },
+          { src: "/images/projects/project-01/8_Slack_Alert_Channel.png", alt: "Slack alerts showing detection and isolation status", width: 16, height: 9 },
+          { src: "/images/projects/project-01/7_HTML_Email_Notification.png", alt: "HTML email notification summarizing detection", width: 16, height: 9 },
+          { src: "/images/projects/project-01/11_LimaCharlie_Sensor_Isolated.png", alt: "LimaCharlie console confirming isolated endpoint", width: 16, height: 9 },
+          { src: "/images/projects/project-01/06-search-results.png", alt: "Splunk RDP detection results", width: 16, height: 9 },
         ],
       },
       {
         title: "Networking & IT Support",
-        description: <>Windows/Mac/Linux troubleshooting, IP networking, VPN/Wi-Fi security, router config, system recovery.</>,
+        description: (
+          <>
+            Windows/Mac/Linux troubleshooting, IP networking, VPN/Wi-Fi security, router configuration, and
+            system recovery. Experienced with VLANs, RDP, and firewall tuning in both local and cloud labs.
+          </>
+        ),
         tags: [
           { name: "Networking", icon: "network" },
           { name: "Linux", icon: "linux" },
@@ -271,10 +288,15 @@ const about: About = {
       },
       {
         title: "Vulnerability Management & IR",
-        description: <>Tenable scanning, CVE triage, patch validation, evidence capture; incident response workflows and containment.</>,
+        description: (
+          <>
+            Tenable scanning, CVE triage, patch validation, and evidence capture. Built IR workflows that
+            include containment verification, log preservation, and post-incident documentation.
+          </>
+        ),
         tags: [
-          { name: "Tenable", icon: "tenable" },      // add to iconLibrary
-          { name: "Wireshark", icon: "wireshark" },  // add to iconLibrary
+          { name: "Tenable", icon: "tenable" },
+          { name: "Wireshark", icon: "wireshark" },
           { name: "LDAP", icon: "server" },
         ],
         images: [
@@ -284,20 +306,30 @@ const about: About = {
       },
       {
         title: "Programming & Scripting",
-        description: <>Python automation, PowerShell scripting, JavaScript web apps, HTML/CSS; regex, JSON/webhooks.</>,
+        description: (
+          <>
+            Python automation, PowerShell scripting, JavaScript web apps, HTML/CSS, regex, and JSON/webhooks.
+            Used scripting to connect APIs between SOAR, EDR, and Slack for automated security workflows.
+          </>
+        ),
         tags: [
           { name: "Python", icon: "python" },
           { name: "PowerShell", icon: "terminal" },
           { name: "JavaScript", icon: "javascript" },
         ],
         images: [
-          { src: "/images/projects/project-01/01-vscode.png", alt: "VS Code with Python game code", width: 16, height: 9 },
+          { src: "/images/projects/project-01/01-vscode.png", alt: "VS Code with Python code", width: 16, height: 9 },
           { src: "/images/projects/project-01/04-code.png", alt: "IntelliPath AI source code example", width: 16, height: 9 },
         ],
       },
       {
         title: "Cloud & Virtualization",
-        description: <>Azure, Vultr VPC, VMware/Hyper-V basics, VM provisioning, NSGs/firewall rules, honeypot deployments.</>,
+        description: (
+          <>
+            Azure, Vultr VPC, VMware/Hyper-V, VM provisioning, NSGs/firewall rules, and honeypot deployments.
+            Built cloud SOC environments for testing EDR agents, network isolation, and SIEM log ingestion.
+          </>
+        ),
         tags: [
           { name: "Azure", icon: "microsoft" },
           { name: "VMware", icon: "cloud" },
@@ -307,15 +339,19 @@ const about: About = {
           { src: "/images/projects/project-01/00-rg-soc-lab.png", alt: "Azure SOC resource group", width: 16, height: 9 },
           { src: "/images/projects/project-01/04-uf-install.png", alt: "Splunk UF install on Windows host", width: 16, height: 9 },
         ],
-
       },
       {
         title: "AI & Data Tools",
-        description: <>ChatGPT/Copilot workflows, transcript summarization, structured note gen, basic SQL/Excel analysis, Supabase.</>,
+        description: (
+          <>
+            ChatGPT/Copilot workflows, transcript summarization, structured note generation, basic
+            SQL/Excel analysis, and Supabase database integration for full-stack learning projects.
+          </>
+        ),
         tags: [
           { name: "Supabase", icon: "supabase" },
-          { name: "SQL", icon: "database" },       // add to iconLibrary
-          { name: "Excel", icon: "excel" },        // add to iconLibrary
+          { name: "SQL", icon: "database" },
+          { name: "Excel", icon: "excel" },
         ],
         images: [
           { src: "/images/projects/project-01/02-video-screen.png", alt: "IntelliPath AI video transcript screen", width: 16, height: 9 },
@@ -324,7 +360,7 @@ const about: About = {
       },
     ],
   },
-};
+}
 
 const blog: Blog = {
   path: "/blog",
