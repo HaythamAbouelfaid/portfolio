@@ -91,7 +91,7 @@ const about: About = {
       <>
         Haytham is a U.S.-based IT & Cybersecurity student at Northern Virginia Community College
         (transfer path to George Mason University). Certified in Google IT Support, Cybersecurity, AI Essentials,
-        and Microsoft Security, he is passionate about system recovery, cloud security, SIEM/SOAR,
+        and Microsoft Security, he is passionate about system recovery, cloud security, SIEM/SOAR, AI Automation,
         and building labs that simulate enterprise-level security environments.
       </>
     ),
@@ -100,6 +100,26 @@ const about: About = {
     display: true, // set to false to hide this section
     title: "Experience",
     experiences: [
+      {
+        company: "LSMP Video",
+        timeframe: "Aug 2025 - Present",
+        role: "GTM Automation IT Support Specalist",
+        achievements: [
+          <>
+            Collaborate with LSMP Video’s founder to design and maintain AI-integrated automation systems supporting sales enablement and client outreach.
+          </>,
+          <>
+            Build and optimize Make.com workflows linking Browser Flow, Google Sheets, and ChatGPT/Gemini for automated LinkedIn and email campaigns.
+          </>,
+          <>
+            Support GTM automation initiatives, including campaign sequencing, AI workflow testing, and process documentation.
+          </>,
+          <>
+            Conduct AI research to evaluate and integrate emerging tools for sales, marketing, and workflow automation efficiency.
+          </>,
+        ],
+        images: [],
+      },
       {
         company: "Loudoun County Public Schools",
         timeframe: "Oct 2025 - Present",
@@ -156,7 +176,7 @@ const about: About = {
       },
       {
         company: "Home Depot",
-        timeframe: "Feb 2025 - Present",
+        timeframe: "Feb 2025 - Dec 2025",
         role: "Retail Sales Associate",
         achievements: [
           <>
@@ -170,47 +190,6 @@ const about: About = {
           </>,
         ],
         images: [],
-      },
-
-      {
-        company: "Computer Science Honors Scoeity",
-        timeframe: "June 2025 - July 2025",
-        role: "Member",
-        achievements: [
-          <>Taught elementary students coding basics using Scratch and Google Autodraw to build foundational programming skills.</>,
-          <>Organized and led coding workshops to introduce young learners to programming and creative problem-solving.</>,
-          <>Competed in CyberSlam 2025 at George Mason University, applying practical cybersecurity techniques in real-world simulation challenges.</>,
-          <>Solved algorithmic problems in the UVA Coding Competition, demonstrating proficiency in Python programming and problem-solving.</>,
-          <>Collaborated with peers to plan events and support fellow students in improving their coding and cybersecurity knowledge.</>,
-          <>Gained experience presenting technical material in simple, engaging ways — strengthening public speaking and communication skills.</>,
-        ],
-        images: [
-          // optional: leave the array empty if you don't want to display images
-          {
-            src: "/images/projects/project-01/cshs-uva.jpg",
-            alt: "CSHS UVA Coding Competition",
-            width: 16,
-            height: 9,
-          },
-          {
-            src: "/images/projects/project-01/cshs-cyberslam-1.jpg",
-            alt: "CSHS CyberSlam Competition",
-            width: 16,
-            height: 9,
-          }, 
-          {
-            src: "/images/projects/project-01/cshs-cyberslam.jpg",
-            alt: "CSHS CyberSlam Competition",
-            width: 16,
-            height: 9,
-          },  
-          {
-            src: "/images/projects/project-01/cshs-volunteer.jpg",
-            alt: "CShS Volunteer Teaching Kids",
-            width: 16,
-            height: 9,
-          },            
-        ],
       },
       {
         company: "Best Buy",

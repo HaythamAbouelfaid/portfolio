@@ -1,0 +1,115 @@
+---
+title: "LinkedIn Content Automation Engine (Make.com, OpenRouter, Gamma AI)"
+publishedAt: "2026-01-04"
+summary: "Built an end-to-end LinkedIn content engine that turns TLDR newsletters into SOC-focused posts with AI-generated Gamma slide decks, fully automated and scheduled in Make.com."
+images:
+  - "/images/projects/project-01/0_Make_Workflow_Full.jpg"
+  - "/images/projects/project-01/1_Gmail_Watch_Emails.jpg"
+  - "/images/projects/project-01/2_OpenRouter_Extractor_All_Articles.jpg"
+  - "/images/projects/project-01/3_Parse_JSON_Extractor.jpg"
+  - "/images/projects/project-01/4_OpenRouter_Article_Decider.jpg"
+  - "/images/projects/project-01/5_Parse_JSON_Article_Decider.jpg"
+  - "/images/projects/project-01/6_HTTP_Fetch_Article_Content.jpg"
+  - "/images/projects/project-01/7_OpenRouter_LinkedIn_Post_Text.jpg"
+  - "/images/projects/project-01/8_Gamma_Slideshow_Prompt.jpg"
+  - "/images/projects/project-01/9_Gamma_Slideshow_Create.jpg"
+  - "/images/projects/project-01/10_HTTP_Downloadable_Gamma_File.jpg"
+  - "/images/projects/project-01/11_LinkedIn_Post_With_Infographic_Link.jpg"
+
+team:
+  - name: "Haytham Abouelfaid"
+    role: "SOC Analyst & Automation Builder"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/haytham-abouelfaid"
+link: "https://www.linkedin.com/in/haytham-abouelfaid"
+---
+
+## Overview
+
+I built a **LinkedIn content automation engine** that converts TLDR AI newsletters into SOC-focused LinkedIn posts with attached Gamma slide decks—on a recurring schedule—using **Make.com**, **OpenRouter**, **Gamma AI**, and HTTP modules.  
+
+The automation ingests newsletters from Gmail, extracts all articles, decides which one is most relevant for SOC/detection engineering, pulls the full article content, generates a LinkedIn post in my voice, creates a Gamma slideshow, converts the export link into a downloadable file URL, then publishes a LinkedIn post containing the text and infographic link.
+
+**Why this matters:**  
+Security professionals need consistent, high-signal content without spending hours drafting posts. This workflow shows how to combine **AI + automation** to maintain a strong technical presence on LinkedIn while staying focused on real SOC work.
+
+---
+
+## Key Features
+
+- **Gmail-driven newsletter ingestion:**  
+  - A **Gmail Watch Emails** trigger listens for incoming TLDR newsletters based on sender/subject filters.  
+  - Each new newsletter kicks off a single pass through the pipeline so posts are always based on the latest content.
+
+- **Article extraction and decision logic:**  
+  - An **OpenRouter “Extractor”** step parses the newsletter body and returns all articles, links, and type metadata (e.g., AI, security, etc.).  
+  - A **Parse JSON** module structures this output into arrays/objects Make can work with.  
+  - A second **OpenRouter “Article Decider”** call ranks the extracted articles and selects the one best aligned with SOC, detection engineering, or security automation.  
+  - Another **Parse JSON** module converts the decider’s response into clean fields: chosen title, URL, and summary.
+
+- **Full article retrieval and post generation:**  
+  - An **HTTP Get a web page** module downloads the full content of the selected article using its URL.  
+  - An **OpenRouter “LinkedIn Post Text”** step takes the article (title, link, content) plus a style guide prompt and generates a LinkedIn-ready post in my voice as a SOC analyst.  
+  - The prompt enforces:  
+    - 🧠 hook,  
+    - 🔹 technical bullets,  
+    - ⚠️ defender takeaway,  
+    - source link + security hashtags.
+
+- **Gamma slideshow creation and export handling:**  
+  - A **Gamma** module generates a multi-slide slideshow/infographic using the chosen article and a structured prompt (slide structure, headings, SOC insights).  
+  - Gamma returns a **PDF export URL** for the finished deck.  
+  - An **HTTP** module converts that export URL into a **direct downloadable link** that can be safely shared in the LinkedIn post text.
+
+- **LinkedIn posting & scheduling:**  
+  - A final **LinkedIn Create User Text Post** module publishes the AI-generated text and appends the Gamma deck link so viewers can open and scroll all slides.  
+  - A lightweight **Sleep** step can be used as a buffer (e.g., giving Gamma time to finish) but the flow works even without it.  
+  - The entire scenario is scheduled in Make.com to run **every Tuesday, Thursday, and Saturday at 9:58 AM ET**, aligning with a consistent posting cadence.
+
+---
+
+## Technologies Used
+
+- **Automation Platform:** Make.com (scenario orchestration, scheduling, JSON parsing, variable mapping).  
+- **LLM / AI APIs:** OpenRouter (article extraction, ranking, LinkedIn copy generation).  
+- **Presentation / Infographic Engine:** Gamma AI (slide deck generation, PDF export links).  
+- **Email Integration:** Gmail Watch Emails (newsletter ingestion).  
+- **Web Content Retrieval:** HTTP modules (fetch article body, handle Gamma export URLs).  
+- **Social Platform:** LinkedIn (Create User Text Post with embedded infographic link).  
+- **Data Structures:** JSON parsing, arrays/objects, prompt templates, and mapped variables across modules.  
+
+---
+
+## Challenges and Learnings
+
+- **Chaining AI steps reliably:**  
+  - Needed to carefully design prompts so the **Extractor**, **Article Decider**, and **Post Text** models each returned predictable JSON and text formats.  
+  - Learned that enforcing explicit JSON schemas and word limits keeps the automation from breaking when newsletter formatting changes.
+
+- **Handling external content and timing:**  
+  - Some articles load slowly or have heavy pages, so the **HTTP fetch** and **Gamma generation** steps were tested repeatedly with different content to make sure they wouldn’t time out.  
+  - Added an optional **Sleep** module as a safety buffer after Gamma when experimenting, then tuned the flow once everything proved stable.
+
+- **Balancing depth and readability:**  
+  - Iterated on the LinkedIn prompt so posts stay **technical enough for SOC analysts** but short and scannable for a feed environment.  
+  - Adjusted bullets, hooks, and hashtag count to land in a sweet spot for engagement and clarity.
+
+**Takeaway:**  
+The project shows how to turn a raw information stream (newsletters) into **production-ready, security-focused content** using layered LLM calls and automation. The key is structuring each step so the next module always knows exactly what to expect.
+
+---
+
+## Outcome
+
+- **Consistent, automated posting:**  
+  - The engine generates and posts new SOC/detection-focused content **three times per week at 9:58 AM ET** without manual intervention.  
+
+- **High-leverage personal branding:**  
+  - Each run produces:  
+    - 1 curated article chosen for security relevance.  
+    - 1 LinkedIn post tailored to SOC analysts and detection engineers.  
+    - 1 Gamma slideshow link that functions as a visual infographic.  
+
+- **Reusable framework:**  
+  - The same pattern (email → extraction → decision → content → visual → post) can be reused for other sources (blogs, RSS, internal reports) and other platforms (e.g., X/Twitter, newsletters).  
+  - Demonstrates practical skills in **Make.com scenario design, multi-LLM orchestration, API integration, and security-focused content automation**.
