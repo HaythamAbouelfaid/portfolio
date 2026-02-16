@@ -1,0 +1,195 @@
+---
+title: "CupidSecure – AI-Powered Romance Scam Detection"
+publishedAt: "2026-02-15"
+summary: "Built an end-to-end AI security platform that analyzes dating conversations for romance-scam patterns, scores financial risk, and provides a training simulator and threat dashboard — winner of 1st Place in the Blockchain, Cyber & Security track at HackFax × PatriotHacks 2026."
+images:
+  - "/images/projects/project-01/0_Homepage_Hero.jpg"
+  - "/images/projects/project-01/1_Why_CupidSecure.jpg"
+  - "/images/projects/project-01/2_Conversation_Analyzer.jpg"
+  - "/images/projects/project-01/3_Recommended_Reply.jpg"
+  - "/images/projects/project-01/4_Scammer_Simulator.jpg"
+  - "/images/projects/project-01/5_Risk_Dashboard.jpg"
+  - "/images/projects/project-01/6_Mission_Section.jpg"
+team:
+  - name: "Haytham Abouelfaid"
+    role: "Full Stack & Security"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/haytham-abouelfaid"
+  - name: "Aliza Ahmed"
+    role: "Frontend & UX"
+    avatar: "/images/Aliza.png"
+    linkedIn: "https://www.linkedin.com/in/alizaaahmad/"
+  - name: "Hiba Basharat"
+    role: "Data & Analytics"
+    avatar: "/images/Hiba.png"
+    linkedIn: "https://www.linkedin.com/in/hiba-basharat-6708a22b4/
+link: "https://cupidsecure.com"
+---
+
+## Overview
+
+**CupidSecure** is an AI-powered web platform that detects romance scams in real time by analyzing dating conversations and financial requests. It was built in ~30 hours at **HackFax × PatriotHacks 2026** and awarded **1st Place in the Blockchain, Cyber & Security track**.
+
+Users can paste chat messages or upload screenshots from any dating app, receive an explainable risk score, and get concrete next steps *before* sending money. The platform also includes a Scammer Simulator for training and an enterprise-style dashboard that visualizes scam trends over time.
+
+**Why this matters:**  
+Romance scams cause over a billion dollars in reported losses every year, and many victims never come forward because of shame. CupidSecure is designed as a quiet, trusted **AI copilot** that helps people sanity-check conversations and understand red flags without needing to talk to anyone first.
+
+---
+
+## Key Features
+
+### Conversation Analyzer (Text + Screenshots)
+
+- Users can **paste conversations** or upload **screenshots** from dating and messaging apps.  
+- A Gemini-powered analysis pipeline detects romance-scam tactics such as:
+  - Love bombing and rapid escalation of intimacy.
+  - Overseas deployment or remote work stories.
+  - Crisis and emergency money requests.
+  - Crypto, gift card, or wire transfer asks.
+- The system returns:
+  - A **0–100 risk score** with color-coded severity.
+  - A **red flag timeline / heatmap** showing how risk increases across the conversation.
+  - A list of **detected tactics** with short explanations written for non-technical users.
+
+### Financial Request Check
+
+- Dedicated module for when money comes up in a conversation.  
+- Inputs:
+  - Amount requested.
+  - Payment method (e.g., bank transfer, gift cards, crypto).
+  - Relationship duration (days/weeks).
+  - Stated reason for the request.
+- Combines these into a **financial risk score** with justification, flagging especially risky patterns like:
+  - Large amounts early in the relationship.
+  - High-risk payment methods.
+  - Classic emergency narratives.
+- Output is a simple recommendation like **“High risk – do not send”** plus a brief rationale.
+
+### Practice Mode – Scammer Simulator
+
+- Interactive **Scammer Simulator** where the AI plays various romance-scam personas:
+  - Deployed soldier overseas.
+  - Long-distance professional with sudden crisis.
+  - “Investor” with guaranteed returns.
+- Users chat with the AI as if it were a real person and try to spot red flags in real time.  
+- After a set number of messages, the simulator:
+  - Reveals the tactics it used.
+  - Highlights missed warning signs.
+  - Suggests better responses for next time.
+- Designed for workshops, campus events, or self-guided training.
+
+### Risk Dashboard
+
+- An **enterprise-style dashboard** surfaces high-level metrics, including:
+  - Active monitored users.
+  - Risky conversations flagged in the last 7 days.
+  - Estimated loss prevented.
+  - Average risk score across the system.
+- Visualizations:
+  - **Weekly threat trend line**.
+  - **Scam type distribution** (donut chart).
+  - **Geographic hotspots** inside the US.
+- Intended for future integrations with:
+  - Dating platforms.
+  - Counselors or victim-support organizations.
+  - Campus safety offices.
+
+### Embedded AI Assistant
+
+- A persistent **Cupid AI assistant** appears across pages via a chat bubble.  
+- Explains:
+  - What each section does.
+  - How to interpret risk scores and red flags.
+  - What actions to take if a conversation looks unsafe.
+- The goal is to make the product approachable for users who are anxious, non-technical, or unfamiliar with security tools.
+
+---
+
+## Technologies Used
+
+- **Frontend**
+  - TypeScript.
+  - React-style single-page application.
+  - HTML/CSS with a dark, security-inspired design system.
+  - Componentized sections: Hero, Why CupidSecure, Mission, Analyzer, Practice Mode, Dashboard, FAQ, Team.
+
+- **Backend & AI**
+  - Node.js / Express-style API layer.
+  - **Gemini 2.0 Flash** for:
+    - Conversation and screenshot analysis.
+    - Scam tactic classification.
+    - Risk scoring and natural-language explanations.
+    - Simulator persona dialogues and coaching messages.
+  - Custom financial-risk heuristics (amount, duration, payment method, reason).
+
+- **Other**
+  - GitHub for version control.
+  - Vercel for deployment and CI.
+  - GoDaddy domain management for `cupidsecure.com`.
+
+---
+
+## Design & UX
+
+- **Theme:**  
+  - Dark, cyber-security inspired aesthetic with magenta/purple accents to match the “Cupid” brand.
+  - Subtle grid background and glow borders to create a **security dashboard** feel without overwhelming the user.
+
+- **UX priorities:**
+  - Clear information hierarchy:
+    - Hero → Features → Analyzer → Practice → Dashboard → Mission → FAQ → Team.
+  - Simple, high-contrast CTAs such as **“Analyze a Conversation Now”**.
+  - Readable risk summaries and action lists rather than dense paragraphs.
+  - Privacy-first messaging (in-memory analysis, no long-term storage) surfaced prominently.
+
+- **Micro-interactions:**
+  - Hover states on navigation, cards, and buttons.
+  - Smooth scroll between sections.
+  - Light elevation animations on cards to reinforce clickability.
+
+---
+
+## Challenges & Learnings
+
+- **Designing for shame and fear:**  
+  Many users are embarrassed to talk about potential scams. We had to design flows that feel private, non-judgmental, and safe to try in under a minute.
+
+- **Explainability over raw scores:**  
+  A single 0–100 number isn’t enough. It took iteration to combine:
+  - A simple risk bar.
+  - A red flag timeline.
+  - Named tactics and recommended actions.
+  into a layout that people can scan quickly.
+
+- **Realistic but safe simulation:**  
+  Building the Scammer Simulator required balancing realism with safety—capturing common scam narratives without veering into exploitative or overly graphic content.
+
+- **Timeboxing an end-to-end product:**  
+  Within a hackathon weekend, we had to scope aggressively:
+  - Focus on a clean, cohesive MVP.
+  - Reuse components across pages.
+  - Keep the backend thin and delegate as much as possible to the LLM.
+
+---
+
+## Outcome
+
+- **Hackathon recognition:**  
+  - Awarded **1st Place in the Blockchain, Cyber & Security track** at HackFax × PatriotHacks 2026.
+
+- **Working live demo:**  
+  - Deployed to `https://cupidsecure.com` with:
+    - Functional analyzer.
+    - Scammer Simulator.
+    - Financial Request Check.
+    - Risk dashboard.
+    - AI assistant and marketing site.
+
+- **Future directions:**  
+  - Direct integrations with dating platforms and messaging apps.  
+  - Mobile app with one-tap screenshot upload.  
+  - Evidence packaging for IC3 and law-enforcement reports.  
+  - Partnerships with universities, banks, and nonprofits for awareness training.
+
+CupidSecure demonstrates how **AI, UX, and security** can come together to give people a realistic way to check their gut, understand risk, and act before a romance scam turns into financial and emotional damage.

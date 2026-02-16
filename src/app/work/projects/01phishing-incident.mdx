@@ -1,0 +1,147 @@
+---
+title: "LCPS Gift Card Phishing Incident Analysis (BEC Investigation)"
+publishedAt: "2025-10-22"
+summary: "Investigated and documented a real-world Business Email Compromise (BEC) phishing attempt targeting an LCPS email account. Performed email header forensics, social engineering analysis, framework mapping, and produced a formal incident report and visual case-study poster."
+images:
+  - "/images/projects/project-01/0_Poster.png"
+  - "/images/projects/project-01/1_Phishing_Email.png"
+  - "/images/projects/project-01/2_Phishing_SMS.png"
+  - "/images/projects/project-01/3_Header_Analysis.png"
+
+team:
+  - name: "Haytham Abouelfaid"
+    role: "IT & Cybersecurity Student"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/haytham-abouelfaid"
+
+link: "https://github.com/HaythamAbouelfaid/Phishing-Incident-Analysis"
+
+---
+
+## Overview
+
+This project documents a **real-world phishing incident** that targeted my **Loudoun County Public Schools (LCPS)** email account and escalated into a **gift card scam via SMS** — a classic **Business Email Compromise (BEC)** attack pattern.
+
+Instead of ignoring the attempt, I treated it as a **SOC-style incident investigation**, collecting evidence, performing **email header forensics**, analyzing **social engineering tactics**, and documenting the full **incident response lifecycle** aligned with industry frameworks.
+
+**Why this matters:**  
+Phishing and BEC attacks remain one of the **most common and costly threats** facing organizations today. This case study demonstrates how analysts investigate suspicious messages, validate sender authenticity, and prevent financial loss through **technical analysis, documentation, and awareness**.
+
+---
+
+## Incident Summary
+
+- **Date:** October 22, 2025  
+- **Target:** LCPS Substitute Teacher email account  
+- **Initial Vector:** Email titled *“Weekly Operations Review”*  
+- **Escalation:** SMS messages requesting urgent gift card purchases  
+- **Objective:** Financial theft via social engineering  
+
+The attacker impersonated an LCPS supervisor using a **generic Outlook.com email address**, requested confidentiality, and attempted to pressure immediate action — all hallmark indicators of a BEC gift card scam.
+
+---
+
+## Key Investigation Steps
+
+### 1. Evidence Collection & Preservation
+- Collected the original phishing email and follow-up SMS messages.
+- Redacted sensitive personal information to prevent data exposure.
+- Preserved original artifacts (email headers, screenshots) to maintain integrity and chain-of-custody.
+
+### 2. Email Header Forensics
+- Extracted full message headers from Microsoft Outlook.
+- Analyzed:
+  - **From** and **Return-Path** fields
+  - **SPF, DKIM, and DMARC** authentication results
+  - Received mail server chain
+- Verified the email originated from an **external Outlook.com domain**, not LCPS infrastructure.
+
+### 3. Automation & Scripting
+- Built a custom Python script (`header_quickcheck.py`) to:
+  - Parse raw email headers using regex
+  - Extract SPF/DKIM/DMARC results
+  - Highlight external domains and authentication mismatches
+- Demonstrated how lightweight tooling can assist analysts during triage.
+
+### 4. Social Engineering Analysis
+Identified multiple manipulation techniques:
+- **Authority:** Impersonation of a supervisor figure  
+- **Urgency:** Pressure to act immediately  
+- **Confidentiality:** Requests to avoid verification  
+- **Financial Lure:** Gift card purchase request  
+
+### 5. Incident Response & Reporting
+- Did **not** engage further with the attacker.
+- Reported the incident to LCPS IT security.
+- Blocked the associated phone number and email address.
+- Documented findings in a formal technical report and infographic.
+
+---
+
+## Framework Mapping
+
+- **NIST SP 800-61 (Incident Response Lifecycle):**
+  - Detection & Analysis  
+  - Containment  
+  - Reporting  
+
+- **MITRE ATT&CK (Enterprise):**
+  - **T1566** – Phishing  
+  - **T1656** – Financial Theft  
+
+Mapping the incident to established frameworks demonstrates how real-world phishing attempts fit into standardized security models used in SOC environments.
+
+---
+
+## Visual Documentation
+
+- Created a **1-page phishing case study poster** summarizing:
+  - Attack vector (Email → SMS)
+  - BEC tactics used
+  - Technical findings
+  - Prevention strategies
+- Designed for clear communication to both technical and non-technical audiences.
+
+---
+
+## Technologies Used
+
+- **Email Platform:** Microsoft Outlook (message source & headers)
+- **Header Analysis:** MXToolbox
+- **Programming:** Python (regex-based header parsing)
+- **Documentation:** Markdown, technical incident report
+- **Visualization:** PowerPoint (infographic poster)
+- **Version Control:** Git & GitHub
+
+---
+
+## Downloadable Documents
+
+[📄 Download Email Header Analysis Report](/images/projects/project-01/3_Header_Analysis.pdf)
+
+---
+
+## Key Takeaways
+
+- Email authentication checks (SPF/DKIM/DMARC) must be paired with **contextual analysis** — passing checks alone do not guarantee legitimacy.
+- BEC attacks rely heavily on **human trust and urgency**, not malware.
+- Proper documentation and reporting are critical components of effective incident response.
+- Turning real incidents into structured case studies accelerates hands-on cybersecurity learning.
+
+---
+
+## Outcome
+
+- Successfully identified and contained a real phishing attempt with **no financial or data loss**.
+- Produced a complete **SOC-style investigation artifact set**:
+  - Evidence
+  - Header analysis
+  - Python tooling
+  - Framework mapping
+  - Visual reporting
+- Published the project to GitHub and LinkedIn as part of a professional cybersecurity portfolio.
+
+**Next steps:**
+- Extend the header analysis script with threat-intel enrichment.
+- Add phishing detection heuristics for automated flagging.
+- Incorporate the project into a broader phishing awareness training module.
