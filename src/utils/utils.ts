@@ -43,7 +43,7 @@ function readMDXFile(filePath: string) {
     publishedAt: data.publishedAt,
     summary: data.summary || "",
     image: data.image || "",
-    images: data.images || [],
+    images: Array.isArray(data.images) ? data.images.map(img => String(img)) : [],
     tag: data.tag || [],
     team: data.team || [],
     link: data.link || "",
