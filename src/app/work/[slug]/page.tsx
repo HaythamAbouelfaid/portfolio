@@ -8,13 +8,13 @@ import {
   Column,
   Flex,
   Heading,
-  Media,
   Text,
   SmartLink,
   Row,
   Avatar,
   Line,
 } from "@once-ui-system/core";
+import Image from "next/image";
 import { baseURL, about, person, work } from "@/resources";
 import { formatDate } from "@/utils/formatDate";
 import { ScrollToHash, CustomMDX } from "@/components";
@@ -44,10 +44,10 @@ export async function generateMetadata({
   if (!post) return {};
 
   return Meta.generate({
-    title: post.metadata.title,
-    description: post.metadata.summary,
+    title: post.metadata.title || "Project",
+    description: post.metadata.summary || "",
     baseURL: baseURL,
-    image: post.metadata.image || `/api/og/generate?title=${post.metadata.title}`,
+    image: post.metadata.image ? String(post.metadata.image) : `/api/og/generate?title=${encodeURIComponent(String(post.metadata.title || "Project"))}`,
     path: `${work.path}/${post.slug}`,
   });
 }
@@ -79,12 +79,12 @@ export default async function Project({
         as="blogPosting"
         baseURL={baseURL}
         path={`${work.path}/${post.slug}`}
-        title={post.metadata.title}
-        description={post.metadata.summary}
-        datePublished={post.metadata.publishedAt}
-        dateModified={post.metadata.publishedAt}
+        title={String(post.metadata.title || "Project")}
+        description={String(post.metadata.summary || "")}
+        datePublished={String(post.metadata.publishedAt || "")}
+        dateModified={String(post.metadata.publishedAt || "")}
         image={
-          post.metadata.image || `/api/og/generate?title=${encodeURIComponent(post.metadata.title)}`
+          String(post.metadata.image || "") || `/api/og/generate?title=${encodeURIComponent(String(post.metadata.title || "Project"))}`
         }
         author={{
           name: person.name,
@@ -118,8 +118,15 @@ export default async function Project({
           </Text>
         </Row>
       </Row>
-      {post.metadata.images && Array.isArray(post.metadata.images) && post.metadata.images.length > 0 && (
-        <Media priority aspectRatio="16 / 9" radius="m" alt="image" src={String(post.metadata.images[0])} />
+      {post.metadata.images && Array.isArray(post.metadata.images) && post.metadata.images.length > 0 && post.metadata.images[0] && (
+        <Image 
+          priority 
+          width={1600} 
+          height={900} 
+          alt="project cover" 
+          src={post.metadata.images[0] as string}
+          style={{ borderRadius: "12px" }}
+        />
       )}
       <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
         <CustomMDX source={post.content} />
