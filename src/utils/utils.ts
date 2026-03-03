@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
 
 type Team = {
@@ -19,7 +19,6 @@ type Metadata = {
   team: Team[];
   link?: string;
 };
-
 import { notFound } from "next/navigation";
 
 function getMDXFiles(dir: string) {
