@@ -1,0 +1,149 @@
+---
+title: "Enterprise Help Desk Lab – osTicket on Microsoft Azure"
+publishedAt: "2026-02-28"
+summary: "Deployed and secured a cloud-hosted enterprise help desk system in Microsoft Azure using Ubuntu, Apache, MySQL, and osTicket. Implemented SLA tiers, department-based routing, structured triage workflows, and simulated enterprise IT operations."
+images:
+  - "/images/projects/project-01/01-azure-vm-overview.jpg"
+  - "/images/projects/project-01/02-https-certbot-terminal.jpg"
+  - "/images/projects/project-01/03-departments.jpg"
+  - "/images/projects/project-01/04-sla-plan.jpg"
+  - "/images/projects/project-01/05-ticket-dashboard.jpg"
+  - "/images/projects/project-01/06-ticket-lifecycle.jpg"
+  - "/images/projects/project-01/07-support-center.jpg"
+team:
+  - name: "Haytham Abouelfaid"
+    role: "Cloud Infrastructure & IT Operations"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/haytham-abouelfaid"
+link: "https://github.com/HaythamAbouelfaid/osticket-azure-helpdesk-lab"
+---
+
+## Overview
+
+This project simulates a real-world **enterprise IT Service Desk environment** built entirely in Microsoft Azure.
+
+I deployed and configured **osTicket** on an Ubuntu Linux virtual machine, secured the environment with HTTPS, and modeled structured IT operations including triage, SLA management, escalation handling, and ticket lifecycle documentation.
+
+The goal was not just installation — it was operating the system like a production help desk.
+
+---
+
+## Infrastructure & Deployment
+
+- Provisioned an **Ubuntu 24.04 VM** in Microsoft Azure.
+- Configured Apache, MySQL, and PHP to host osTicket.
+- Secured server access using **SSH key authentication**.
+- Implemented HTTPS using **Let’s Encrypt (Certbot)**.
+- Configured Azure networking, public IP, and DNS.
+
+This mirrors how a small-to-mid enterprise might deploy a cloud-hosted internal service desk.
+
+---
+
+## Service Desk Architecture
+
+### Departments & Ticket Routing
+
+Created structured departments to simulate enterprise support operations:
+
+- Identity & Access  
+- Networking  
+- Help Desk  
+- Onboarding / Tier 2 Escalation  
+
+Help Topics were configured to automatically route tickets to the appropriate department and priority level.
+
+---
+
+### SLA Configuration (ITIL-Style)
+
+Implemented priority-based SLA tiers:
+
+- **P1 (Critical)** – 4-hour resolution target  
+- **P2 (High)** – 8-hour resolution target  
+- **P3 (Normal)** – 48-hour resolution target  
+- **P4 (Low)** – 120-hour resolution target  
+
+Each ticket tracks:
+- Time to first response  
+- Time to resolution  
+- Due date and escalation triggers  
+
+This models real incident management processes used in enterprise IT.
+
+---
+
+## Ticket Simulation & Lifecycle
+
+Simulated **40+ enterprise tickets**, including:
+
+- MFA / Authenticator issues  
+- VPN connection failures  
+- Outlook & shared mailbox errors  
+- Account lockouts  
+- New hire onboarding  
+- Hardware & printer issues  
+- Wi-Fi connectivity problems  
+
+For each ticket, I documented:
+
+- Triage notes  
+- Root cause analysis  
+- Resolution steps  
+- Internal communication  
+- Customer-facing response  
+- SLA validation  
+
+This created a realistic, end-to-end ticket lifecycle workflow.
+
+---
+
+## Operational Reporting
+
+Using structured ticket data, I analyzed:
+
+- Total tickets processed  
+- Priority distribution  
+- Category breakdown  
+- Average response times  
+- Average resolution times  
+- Recurring issue trends  
+
+This simulates help desk KPI reporting and continuous process improvement.
+
+---
+
+## Technologies Used
+
+**Cloud & Infrastructure**
+- Microsoft Azure  
+- Ubuntu Linux  
+- Azure Networking & DNS  
+
+**Server Stack**
+- Apache  
+- MySQL  
+- PHP  
+- osTicket  
+
+**Security**
+- SSH key authentication  
+- Let’s Encrypt SSL (Certbot)  
+
+**Operations**
+- ITIL-style SLA modeling  
+- Triage documentation  
+- Ticket lifecycle management  
+
+---
+
+## Outcome
+
+- Fully functional cloud-hosted help desk system.
+- HTTPS-secured Linux deployment.
+- Structured SLA and department-based routing.
+- 40+ simulated enterprise support tickets.
+- Documented ticket triage and resolution workflows.
+- Public GitHub repository with setup documentation.
+
+This lab bridges **cloud infrastructure, Linux administration, and structured IT service management**, simulating the responsibilities of a Tier 1 / Tier 2 enterprise support environment.
