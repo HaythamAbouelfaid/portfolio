@@ -4,8 +4,6 @@ publishedAt: "2026-03-03"
 summary: "Analyzed a real-world USPS SMS phishing campaign and developed a Python-based CLI tool to automate smishing triage, extract indicators of compromise (IOCs), generate incident response documentation, and create detection rules."
 images:
   - "/images/projects/project-01/00-gemini-cover.png"
-  - "/images/projects/project-01/01-smishing-message.jpg"
-  - "/images/projects/project-01/02-smishing-attachment.jpg"
 team:
   - name: "Haytham Abouelfaid"
     role: "Cybersecurity Analysis & Security Automation"
@@ -23,6 +21,35 @@ A suspicious SMS message was received claiming that a package could not be deliv
 To investigate the message using a structured security workflow, I built **SmishGuard**, a Python-based CLI tool that automatically analyzes suspicious SMS messages and extracts **Indicators of Compromise (IOCs)**.
 
 The goal of this project was to simulate how a **SOC analyst or incident responder** would investigate a phishing message and document the findings.
+
+---
+
+## Original Smishing Message
+
+Below is the original SMS message used for the investigation.
+
+<img src="/images/projects/project-01/01-smishing-message.jpg" alt="USPS Smishing Message Screenshot" />
+
+The message impersonates USPS and claims that a package delivery failed due to incomplete shipping information. It urges the recipient to click a link to resolve the issue.
+
+This tactic is commonly used in **delivery-themed smishing campaigns** to create urgency and trick users into interacting with malicious links.
+
+---
+
+## Malicious Attachment Reference
+
+The message referenced a suspicious document attachment that appeared to be related to delivery verification.
+
+<img src="/images/projects/project-01/02-smishing-attachment.jpg" alt="USPS Smishing Attachment Screenshot" />
+
+Attackers often include **fake shipping notices or invoices** disguised as PDF documents to increase credibility and pressure the recipient to open the file.
+
+Opening such attachments on a normal system can lead to:
+
+- Credential theft
+- Malware execution
+- Data exfiltration
+- Device compromise
 
 ---
 
@@ -87,6 +114,8 @@ USPS.COM
 **Attachment**
 
 USPS-Notice-USD497.pdf
+
+These indicators were documented and included in the incident response report.
 
 ---
 
