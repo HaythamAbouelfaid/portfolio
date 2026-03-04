@@ -1,0 +1,188 @@
+---
+title: "SmishGuard – USPS Smishing Detection & IOC Extraction"
+publishedAt: "2026-03-03"
+summary: "Analyzed a real-world USPS SMS phishing campaign and developed a Python-based CLI tool to automate smishing triage, extract indicators of compromise (IOCs), generate incident response documentation, and create detection rules."
+images:
+  - "/images/projects/project-01/00-gemini-cover.png"
+  - "/images/projects/project-01/01-smishing-message.jpg"
+  - "/images/projects/project-01/02-smishing-attachment.jpg"
+team:
+  - name: "Haytham Abouelfaid"
+    role: "Cybersecurity Analysis & Security Automation"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/haytham-abouelfaid"
+link: "https://github.com/HaythamAbouelfaid/smishguard-usps-smishing-triage"
+---
+
+## Overview
+
+This project analyzes a **real-world SMS phishing (smishing) campaign impersonating the United States Postal Service (USPS)**.
+
+A suspicious SMS message was received claiming that a package could not be delivered due to incomplete shipping information. The message attempted to lure the recipient into clicking a malicious link to update delivery details.
+
+To investigate the message using a structured security workflow, I built **SmishGuard**, a Python-based CLI tool that automatically analyzes suspicious SMS messages and extracts **Indicators of Compromise (IOCs)**.
+
+The goal of this project was to simulate how a **SOC analyst or incident responder** would investigate a phishing message and document the findings.
+
+---
+
+## Smishing Campaign Analysis
+
+The SMS message contained several high-confidence phishing indicators:
+
+- Unknown sender phone number  
+- Brand impersonation (USPS)  
+- Urgent delivery failure message  
+- Call-to-action link  
+- Attachment reference  
+
+These characteristics match common **delivery-themed smishing campaigns** used to steal credentials, payment information, or distribute malicious files.
+
+By analyzing the message using a structured process, the campaign was identified as **high risk**.
+
+---
+
+## SmishGuard CLI Tool
+
+To automate the investigation process, I developed **SmishGuard**, a Python command-line tool that triages suspicious SMS messages.
+
+The tool extracts:
+
+- Phone numbers  
+- URLs  
+- Domains  
+- Attachment references  
+
+It also assigns a **risk score** based on known phishing indicators.
+
+Example command:
+
+    python -m smishguard.cli --file samples/usps_smish.txt --from "+1 (705) 854-1876" --attachment "USPS-Notice-USD497.pdf"
+
+Example output:
+
+    Risk: HIGH
+    Score: 100/100
+
+The message was flagged due to multiple indicators including brand impersonation, urgent delivery language, malicious links, and attachment references.
+
+---
+
+## Indicators of Compromise (IOCs)
+
+The following IOCs were extracted from the smishing message.
+
+**Phone Number**
+
++1 (705) 854-1876
+
+**URL**
+
+USPS.COM/REDELIVERY
+
+**Domain**
+
+USPS.COM
+
+**Attachment**
+
+USPS-Notice-USD497.pdf
+
+---
+
+## Incident Response Documentation
+
+To simulate real-world security operations workflows, I created structured documentation for the investigation including:
+
+- Incident report template
+- IOC documentation
+- Evidence screenshots
+- Risk assessment and mitigation recommendations
+
+This documentation mirrors how **SOC analysts and security teams document phishing investigations**.
+
+---
+
+## Safe Attachment Handling
+
+Suspicious attachments should never be opened on a host system.
+
+If analysis is required, the file should be transferred to an isolated environment such as a virtual machine or sandbox.
+
+Example PowerShell command used to compute a SHA256 file hash:
+
+    Get-FileHash .\USPS-Notice-USD497.pdf -Algorithm SHA256
+
+The hash can then be submitted to threat intelligence platforms such as VirusTotal for additional analysis.
+
+---
+
+## Detection Engineering
+
+A **Sigma detection rule** was created to identify similar delivery-themed smishing campaigns using common phishing keywords.
+
+Example indicators used in the rule include:
+
+- "Urgent Notice"
+- "Unable to deliver"
+- "USPS"
+- "Redelivery"
+- "Click here"
+
+This rule can be adapted for:
+
+- SIEM detection queries
+- SMS or email security filters
+- Threat hunting workflows
+
+---
+
+## Testing & Continuous Integration
+
+The project includes automated testing and linting to maintain code quality.
+
+**Testing Tools**
+
+- pytest  
+- Ruff  
+
+**CI Pipeline**
+
+- GitHub Actions  
+
+Each commit triggers automated validation to ensure that the smishing analysis tool continues to function correctly.
+
+---
+
+## Technologies Used
+
+**Security & Detection**
+
+- Phishing analysis  
+- Indicator of Compromise extraction  
+- Detection engineering (Sigma)  
+
+**Development**
+
+- Python  
+- Regex parsing  
+- CLI tooling  
+
+**DevOps**
+
+- GitHub Actions  
+- pytest  
+- Ruff  
+
+---
+
+## Outcome
+
+- Developed a Python-based smishing triage tool.
+- Extracted and documented real-world phishing indicators.
+- Created structured incident response documentation.
+- Implemented a Sigma detection rule for similar campaigns.
+- Built automated tests and CI pipelines for reliability.
+- Published the full investigation and tool on GitHub.
+
+This project demonstrates practical cybersecurity skills including **phishing investigation, incident response documentation, detection engineering, and security automation using Python.**
