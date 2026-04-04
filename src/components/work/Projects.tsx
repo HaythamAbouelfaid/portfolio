@@ -15,9 +15,11 @@ export function Projects({ range, exclude }: ProjectsProps) {
     allProjects = allProjects.filter((post) => !exclude.includes(post.slug));
   }
 
-  const sortedProjects = allProjects.sort((a, b) => {
-    return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
-  });
+  const sortedProjects = allProjects
+    .filter((post) => !Number.isNaN(new Date(post.metadata.publishedAt).getTime()))
+    .sort((a, b) => {
+      return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
+    });
 
   const displayedProjects = range
     ? sortedProjects.slice(range[0] - 1, range[1] ?? sortedProjects.length)
