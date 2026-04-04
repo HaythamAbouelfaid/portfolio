@@ -1,0 +1,283 @@
+---
+title: "SentinelOps – AI-Assisted Phishing Investigation Platform"
+publishedAt: "2026-04-04"
+summary: "Built a Python-based phishing investigation platform that automates webpage evidence collection, IOC extraction, phishing risk scoring, and analyst-ready reporting using Playwright, OpenRouter, and SQLite."
+images:
+  - "/images/projects/project-01/1-sentinelops-banner.png"
+  - "/images/projects/project-01/2-sentinelops-cli-help.jpg"
+  - "/images/projects/project-01/3-sentinelops-terminal-investigation-run.jpg"
+  - "/images/projects/project-01/4-sentinelops-browser-artifact-wikipedia.jpg"
+  - "/images/projects/project-01/5-sentinelops-markdown-report.jpg"
+  - "/images/projects/project-01/6-sentinelops-json-report.jpg"
+  - "/images/projects/project-01/7-sentinelops-html-snapshot.jpg"
+  - "/images/projects/project-01/8-sentinelops-test-suite-pass.jpg"
+  - "/images/projects/project-01/9-sentinelops-sqlite-case-store.jpg"
+  - "/images/projects/project-01/10-sentinelops-architecture-workflow.png"
+  
+team:
+  - name: "Haytham Abouelfaid"
+    role: "Cybersecurity Analysis & Security Automation"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/haytham-abouelfaid"
+link: "https://github.com/HaythamAbouelfaid/SentinelOps"
+---
+
+## Overview
+
+SentinelOps is an **AI-assisted phishing investigation platform** designed to automate the early stages of suspicious webpage triage.
+
+Phishing investigations typically require analysts to manually:
+- open suspicious URLs in a controlled environment  
+- capture screenshots and rendered HTML  
+- extract indicators of compromise (IOCs)  
+- identify phishing signals  
+- document findings in a structured report  
+
+To simulate and automate this workflow, I built SentinelOps as a **CLI-based cybersecurity tool** that combines browser automation, deterministic detection logic, and LLM-assisted analysis.
+
+---
+
+## SentinelOps Platform Overview
+
+<img src="/images/projects/project-01/1-sentinelops-banner.png" alt="SentinelOps Banner" />
+
+SentinelOps models a **real SOC-style phishing investigation workflow**, transforming a suspicious URL into structured, analyst-ready outputs.
+
+---
+
+## System Architecture
+
+<img src="/images/projects/project-01/10-sentinelops-architecture-workflow.png" alt="SentinelOps Architecture Workflow" />
+
+The platform follows a modular pipeline:
+
+- Analyst submits a suspicious URL  
+- Browser automation collects rendered webpage artifacts  
+- Indicators of compromise are extracted  
+- Phishing detection features are derived  
+- A deterministic risk score is calculated  
+- LLM generates structured analysis  
+- Reports are created and stored  
+- Case data is persisted in SQLite  
+
+This architecture ensures **explainability, modularity, and real-world applicability**.
+
+---
+
+## CLI Investigation Workflow
+
+<img src="/images/projects/project-01/3-sentinelops-terminal-investigation-run.jpg" alt="SentinelOps Terminal Run" />
+
+SentinelOps is operated through a command-line interface:
+
+    python -m app.main --url "https://example.com" --notes "Investigation test"
+
+During execution, the system:
+- launches a browser session  
+- captures HTML and screenshots  
+- extracts IOCs  
+- derives phishing indicators  
+- calculates a risk score  
+- generates structured reports  
+
+---
+
+## Browser Evidence Collection
+
+<img src="/images/projects/project-01/4-sentinelops-browser-artifact-wikipedia.jpg" alt="Browser Artifact Screenshot" />
+
+Using **Playwright**, SentinelOps captures:
+
+- Full-page screenshot  
+- Rendered HTML snapshot  
+- Visible text  
+- Forms and input fields  
+- Buttons and links  
+- Page metadata  
+
+This approach mirrors how a real analyst would inspect a suspicious webpage.
+
+---
+
+## IOC Extraction & Detection
+
+SentinelOps extracts key indicators of compromise:
+
+- URLs  
+- Domains  
+- Email addresses  
+- IP addresses  
+- Suspicious keywords  
+- Brand mentions  
+
+It then derives phishing-specific signals such as:
+
+- login form presence  
+- credential prompts  
+- urgency language  
+- payment-related language  
+- impersonation indicators  
+- suspicious domain patterns  
+
+This deterministic logic improves **consistency and explainability** compared to AI-only approaches.
+
+---
+
+## Risk Scoring Engine
+
+SentinelOps assigns a **deterministic phishing risk score (0–100)** based on detected indicators.
+
+Severity levels include:
+
+- Low  
+- Medium  
+- High  
+- Critical  
+
+Each score is backed by **explicit evidence**, allowing analysts to understand why a page was flagged.
+
+---
+
+## LLM-Assisted Threat Analysis
+
+SentinelOps integrates **OpenRouter** to generate structured analysis based on collected evidence.
+
+The LLM produces:
+
+- Classification  
+- Threat summary  
+- Analyst rationale  
+- Confidence level  
+- Recommended actions  
+
+The LLM is used as a **supporting analysis layer**, not as the primary detection engine.
+
+---
+
+## Investigation Outputs
+
+### Markdown Analyst Report
+
+<img src="/images/projects/project-01/5-sentinelops-markdown-report.jpg" alt="Markdown Report" />
+
+Provides a human-readable investigation summary including:
+- case details  
+- detected indicators  
+- phishing features  
+- severity classification  
+- recommended actions  
+
+---
+
+### JSON Structured Report
+
+<img src="/images/projects/project-01/6-sentinelops-json-report.jpg" alt="JSON Report" />
+
+Machine-readable output containing:
+- extracted indicators  
+- detection features  
+- risk score  
+- LLM analysis  
+- investigation metadata  
+
+---
+
+### HTML Snapshot Artifact
+
+<img src="/images/projects/project-01/7-sentinelops-html-snapshot.jpg" alt="HTML Snapshot" />
+
+Stores the full rendered HTML for:
+- offline analysis  
+- evidence preservation  
+- forensic review  
+
+---
+
+## Case Persistence (SQLite)
+
+<img src="/images/projects/project-01/9-sentinelops-sqlite-case-store.jpg" alt="SQLite Case Store" />
+
+Each investigation is stored in a SQLite database, including:
+
+- case ID  
+- URL  
+- classification  
+- severity  
+- report paths  
+- artifact locations  
+
+This simulates a **lightweight SOC case management system**.
+
+---
+
+## Testing & Validation
+
+<img src="/images/projects/project-01/8-sentinelops-test-suite-pass.jpg" alt="Test Suite Pass" />
+
+SentinelOps includes automated testing using **pytest** to validate:
+
+- IOC extraction  
+- phishing feature detection  
+- risk scoring logic  
+- report generation  
+
+All core detection components are tested to ensure reliability and consistency.
+
+---
+
+## CLI Interface
+
+<img src="/images/projects/project-01/2-sentinelops-cli-help.jpg" alt="CLI Help Output" />
+
+The CLI provides a simple interface for running investigations with options for:
+
+- URL input  
+- analyst notes  
+- investigation mode  
+
+---
+
+## Technologies Used
+
+**Security & Detection**
+- Phishing analysis  
+- IOC extraction  
+- Threat detection logic  
+- Risk scoring  
+
+**Development**
+- Python  
+- Playwright  
+- BeautifulSoup  
+- Typer CLI  
+- Pydantic  
+
+**AI Integration**
+- OpenRouter  
+
+**Data & Storage**
+- SQLite  
+
+**Testing**
+- pytest  
+
+---
+
+## Outcome
+
+- Built a full phishing investigation pipeline from scratch  
+- Automated browser-based evidence collection  
+- Developed deterministic detection and scoring logic  
+- Integrated LLM-assisted structured analysis  
+- Generated analyst-ready and machine-readable reports  
+- Implemented persistent case tracking with SQLite  
+- Validated core functionality with automated testing  
+
+This project demonstrates practical experience in **phishing investigation, security automation, detection engineering, and AI-assisted cybersecurity workflows**.
+
+---
+
+## Project Link
+
+GitHub Repository:  
+https://github.com/HaythamAbouelfaid/SentinelOps
