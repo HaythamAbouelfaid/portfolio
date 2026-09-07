@@ -49,14 +49,14 @@ const home: Home = {
     display: true,
     title: (
       <Row gap="12" vertical="center">
-        <strong className="ml-4">Your AI Everything — Automation & Security Systems</strong>{" "}
+        <strong className="ml-4">SentinelOps — AI-Assisted Phishing Investigation Platform</strong>{" "}
         <Line background="brand-alpha-strong" vert height="20" />
         <Text marginRight="4" onBackground="brand-medium">
           Featured Build
         </Text>
       </Row>
     ),
-    href: "/work/12-your-ai-everything-automation-security-systems",
+    href: "/work/11-sentinelops-ai-phishing-investigation",
   },
   subline: (
     <>
@@ -131,25 +131,19 @@ const about: About = {
         role: "AI Automation & Security Systems Engineer",
         achievements: [
           <>
-            Build AI-assisted operating systems and automation workflows connecting governed
-            knowledge, AI agents, Make.com scenarios, Google Workspace, APIs, structured state,
-            and repeatable business operations.
+            Your AI Everything is an AI consulting, development, automation, and enablement business focused on helping individuals and teams turn existing AI tools into practical operating systems, agents, command centers, knowledge systems, and connected workflows.
           </>,
           <>
-            Design security-conscious workflow patterns with human approval gates for
-            consequential actions, controlled handling of credentials and secrets, logging,
-            error isolation, and documented governance boundaries.
+            Working with Gus across the automation, systems integration, technical operations, and security-minded workflow side of the business.
           </>,
           <>
-            Support Your AI Everything&apos;s AI Consulting, AI Development, AI Automation, and AI
-            Enablement work by translating real workflows into practical systems instead of
-            stand-alone AI demos.
+            Support AI operating system and agent workflow architecture, Make.com automation, REST / HTTP APIs, JSON, webhooks, workflow state, and Google Workspace integrations.
           </>,
           <>
-            Contribute to automation and operating-system concepts across research, content,
-            sales enablement, business intelligence, knowledge synchronization, and team
-            workflows while keeping private client, pricing, and security details out of public
-            portfolio copy.
+            Build AI knowledge systems, prompt and command systems, Your AI OS workflow support, and AI Assessment / automation-audit workflow support.
+          </>,
+          <>
+            Design security-minded workflow patterns including human approval gates, deduplication, error handling, logging, workflow reliability, research automation, sales enablement, content systems, reporting, business intelligence, finance / real-estate intelligence, and documentation.
           </>,
         ],
         images: [],
@@ -357,6 +351,28 @@ const about: About = {
       {
         name: "Microsoft Security Essentials",
         description: <>Completed Aug 2025.</>,
+      },
+    ],
+  },
+  businesses: {
+    display: true,
+    title: "Businesses & Services",
+    services: [
+      {
+        name: "Your AI Everything",
+        description: "Working with Gus on AI operating systems, automation architecture, agents, integrations, knowledge systems, workflow reliability, and security-minded technical operations.",
+        url: "https://myguygus.com/ai",
+        image: "/images/businesses/your-ai-everything/cover.png",
+      },
+      {
+        name: "Your AI OS",
+        description: "A personalized AI operating layer combining role-specific context, agents, knowledge, commands, and automation around how an individual or team actually works.",
+        url: "https://myguygus.com/youraios/en",
+      },
+      {
+        name: "AI Assessment",
+        description: "An assessment entry point for reviewing current AI usage, workflows, repetitive work, and opportunities for practical automation or AI-system improvements.",
+        url: "https://myguygus.com/ai/assessment",
       },
     ],
   },

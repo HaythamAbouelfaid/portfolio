@@ -3,7 +3,6 @@ import { baseURL, about, person, work } from "@/resources";
 import { Projects } from "@/components/work/Projects";
 
 const automationProjects = [
-  "12-your-ai-everything-automation-security-systems",
   "13-sentilops-financial-intelligence-automation",
   "14-nova-cashflow-financial-literacy-automation",
   "15-finance-real-estate-intelligence-automation",

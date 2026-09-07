@@ -103,6 +103,16 @@ export interface About extends BasePageConfig {
     title: string;
     experiences: ExperienceItem[];
   };
+  businesses?: {
+    display: boolean;
+    title: string;
+    services: Array<{
+      name: string;
+      description: React.ReactNode;
+      url: string;
+      image?: string;
+    }>;
+  };
   technical: {
     display: boolean;
     title: string;

@@ -311,6 +311,53 @@ export default function About() {
             </>
           )}
 
+          {about.businesses && about.businesses.display && (
+            <>
+              <Heading
+                as="h2"
+                id={about.businesses.title}
+                variant="display-strong-s"
+                marginBottom="m"
+              >
+                {about.businesses.title}
+              </Heading>
+              <Column fillWidth gap="l" marginBottom="40">
+                {about.businesses.services.map((service, index) => (
+                  <Column key={`${service.name}-${index}`} fillWidth gap="8" paddingBottom="16">
+                    <Row vertical="center" gap="16" fillWidth>
+                      {service.image && (
+                        <Media
+                          radius="m"
+                          height={48}
+                          width={48}
+                          src={service.image}
+                          alt={service.name}
+                        />
+                      )}
+                      <Column>
+                        <Text id={service.name} variant="heading-strong-l">
+                          {service.name}
+                        </Text>
+                        <Text variant="heading-default-xs" onBackground="neutral-weak">
+                          {service.description}
+                        </Text>
+                        <Row paddingTop="8">
+                          <Button
+                            href={service.url}
+                            prefixIcon="chevronRight"
+                            size="s"
+                            variant="secondary"
+                            label={`View ${service.name}`}
+                          />
+                        </Row>
+                      </Column>
+                    </Row>
+                  </Column>
+                ))}
+              </Column>
+            </>
+          )}
+
           {about.community.display && (
             <>
               <Heading
