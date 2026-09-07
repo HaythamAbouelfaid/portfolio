@@ -100,7 +100,7 @@ const dataStyle: DataStyleConfig = {
 
 const effects: EffectsConfig = {
   mask: {
-    cursor: true,
+    cursor: false,
     x: 50,
     y: 0,
     radius: 90,
@@ -144,7 +144,7 @@ const mailchimp: MailchimpConfig = {
     "https://gmail.us18.list-manage.com/subscribe/post?u=4b7d742341f2e25a1cd7ec92b&id=3f7ed35e8b&f_id=0083b3e6f0",
   effects: {
     mask: {
-      cursor: true,
+      cursor: false,
       x: 50,
       y: 0,
       radius: 100,
