@@ -20,6 +20,10 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
+      # The existing lockfile omits eslint-config-next although .eslintrc extends
+      # next/core-web-vitals. Install for QA only; dependency repair stays visible.
+      - name: Supply omitted existing ESLint preset to QA runner
+        run: npm install --no-save --package-lock=false eslint-config-next@15.3.1
       - name: Repository lint script
         run: npm run lint
       - name: TypeScript no-emit check
@@ -28,7 +32,7 @@ jobs:
         run: npm run build
 
   scroll-browser-regressions:
-    needs: lint-type-build
+    # Run independently: a pre-existing lint defect must not hide browser evidence.
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
