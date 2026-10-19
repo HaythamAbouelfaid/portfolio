@@ -2,6 +2,8 @@ import { Column, Heading, Meta, Schema, Text } from "@once-ui-system/core";
 import { baseURL, about, person, work } from "@/resources";
 import { Projects } from "@/components/work/Projects";
 
+const featuredProjects = ["12-aws-cloud-soc-detection-investigation-response"];
+
 const automationProjects = [
   "13-sentilops-financial-intelligence-automation",
   "14-nova-cashflow-financial-literacy-automation",
@@ -48,6 +50,11 @@ export default function Work() {
         </Text>
       </Column>
 
+      <Heading marginBottom="8" variant="heading-strong-xl" align="center">
+        Featured Project
+      </Heading>
+      <Projects include={featuredProjects} />
+
       <Column marginBottom="16" fillWidth radius="l" overflow="hidden">
         <img
           src="/images/projects/automation/automation-systems-cover.png"
@@ -70,7 +77,7 @@ export default function Work() {
       <Text marginBottom="l" align="center" onBackground="neutral-weak">
         Hands-on labs, investigations, support systems, security platforms, and software projects.
       </Text>
-      <Projects exclude={automationProjects} />
+      <Projects exclude={[...featuredProjects, ...automationProjects]} />
     </Column>
   );
 }

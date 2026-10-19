@@ -138,9 +138,10 @@ export default async function Project({
             priority
             width={1600}
             height={900}
-            alt="project cover"
+            alt={`${post.metadata.title} — project cover`}
             src={post.metadata.images[0] as string}
-            style={{ borderRadius: "12px" }}
+            sizes="(max-width: 768px) 100vw, 960px"
+            style={{ borderRadius: "12px", width: "100%", maxWidth: "100%", height: "auto" }}
           />
         )}
 

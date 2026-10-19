@@ -1,0 +1,143 @@
+---
+title: "AWS Cloud SOC — Detection, Investigation & Automated Response"
+publishedAt: "2026-10-13"
+priority: 1
+summary: "Built a personal AWS Cloud SOC lab linking CloudTrail and GuardDuty detection, analyst investigation, IAM-authorized canary containment, and historically verified automatic rollback in 84 seconds."
+image: "/images/projects/aws-cloud-soc/hero-1600x900.png"
+images:
+  - "/images/projects/aws-cloud-soc/hero-1600x900.png"
+team:
+  - name: "Haytham Abouelfaid"
+    role: "Cloud Security Engineering — Personal Lab"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/haytham-abouelfaid"
+---
+
+> **Personal, authorized AWS lab.** This page describes a completed engineering project, not paid SOC work, a production security service, or a response to real attackers. Local dashboard demonstrations contain synthetic fixtures. The October 13, 2026 automatic rollback result comes from a **separate, historical live-lab acceptance test**.
+
+## At a Glance
+
+- **6 source-reviewed CloudTrail Python heuristics** covering root activity, login failures, denied API calls, CloudTrail configuration, IAM permission changes and S3 policy changes.
+- **8 local read-only analyst views**, including Overview, Investigations, Case Dossier, Approval Gate, Response Operations, Forensic Audit, Architecture and Settings/Posture.
+- **60-second configured rollback schedule; 84-second observed automatic recovery** of the original security group in a controlled personal AWS lab drill on October 13, 2026.
+- **Core stack:** Python/Boto3, AWS CloudTrail, GuardDuty, EventBridge, Lambda, DynamoDB, SNS, SQS, IAM/SSO, EC2/VPC, CloudWatch, Terraform, Next.js 16/TypeScript and GitHub Actions.
+
+## The Problem
+
+Alerting alone does not establish a usable response process. A defensible security workflow also needs actionable case context, a human decision boundary, tightly scoped execution, a restoration path armed **before** mutation, and an audit trail that distinguishes automatic recovery from administrator intervention.
+
+This project explores those concerns inside a personally controlled AWS lab.
+
+## Architecture: Two Detection Paths
+
+**CloudTrail API-history hunter.** A read-only Python tool examines selected management-event history against six explicit heuristics. These rules flag potentially interesting API behavior; they do not establish malicious intent without investigation.
+
+**GuardDuty ingestion.** Findings are routed through EventBridge to a Lambda enrichment handler, normalized and stored in DynamoDB case records. SNS can notify the analyst. This path is separate from the Python hunting tool.
+
+The analyst examines the resulting cases before any authorized response.
+
+### Approved system architecture — two separate inputs, one gated response path
+
+![Reviewed full-system architecture showing separate CloudTrail and GuardDuty detection routes, human approval, scoped canary execution, recovery-first restoration, and the local read-only analyst cockpit](/images/projects/aws-cloud-soc/architecture-landscape.png)
+
+*Architecture reference · Public-safe editorial diagram, not a live infrastructure screenshot. The local cockpit reads evidence; it does not directly authorize or execute AWS mutations.*
+
+![Portrait architecture map grouping detection, human approval, canary restoration, and the local read-only cockpit into distinct trust boundaries](/images/projects/aws-cloud-soc/architecture-portrait.png)
+
+*Full architecture · Portrait format for closer inspection on mobile. Explanatory diagram; no private AWS resources are shown.*
+
+## Read-Only SOC Analyst Cockpit
+
+I implemented a local Next.js 16 analyst cockpit to make detection and response state navigable:
+
+1. **Overview:** detection metrics, trends, triage breakdown, queue and pipeline.
+2. **Investigations:** search, severity/source/disposition filtering and case inspection.
+3. **Case dossier:** redacted evidence context, analyst rationale and lifecycle.
+4. **Approval Gate:** human-review architecture, cryptographic challenge and separate reviewer permissions.
+5. **Response Operations:** scoped canary perimeter and mixed simulated/historical response fixtures.
+6. **Forensic Audit:** logical append-only model, activity records and completeness warnings.
+7. **Architecture:** trust boundaries and responsibility separation.
+8. **Settings & Posture:** local read-only behavior and configuration views.
+
+**All screenshots from the audited offline session are synthetic fixtures.** Even UI labels like “LIVE MUTATION” or “VERIFIED READBACK” are fixture content, not evidence of the successful October 13 live test.
+
+### Synthetic offline dashboard gallery
+
+![Sanitized synthetic AWS Cloud SOC overview displaying demonstration detection indicators, charts, and investigation queue; not live monitoring](/images/projects/aws-cloud-soc/synthetic-overview.png)
+
+*01 · SYNTHETIC OFFLINE DASHBOARD — Overview. Demonstration data only; the chart and case totals are not measured AWS production outcomes.*
+
+![Sanitized synthetic case dossier with an example analyst timeline and explanation of evidence, excluding raw identifiers](/images/projects/aws-cloud-soc/synthetic-case-dossier.png)
+
+*02 · SYNTHETIC OFFLINE DASHBOARD — Case dossier. Fixture case and analyst rationale; unrelated to the October 13 historical rollback result.*
+
+![Sanitized synthetic approval-gate view explaining reviewer permissions and nonce-bound challenge; UI cannot send live approvals](/images/projects/aws-cloud-soc/synthetic-approval.png)
+
+*03 · SYNTHETIC OFFLINE DASHBOARD — Human authorization. An explanatory read-only page, not an interactive AWS approval control.*
+
+![Sanitized synthetic canary response scope view; mock status rows are not the final live automatic rollback proof](/images/projects/aws-cloud-soc/synthetic-canary.png)
+
+*04 · SYNTHETIC OFFLINE DASHBOARD — Canary scope. Historical success must be established separately from these fixture rows.*
+
+During the October 17 browser audit, a **Forensic Audit phase-filter defect** was observed: phase-filter links changed the URL without filtering the six displayed entries. The audit also identified stale 600-second/10-minute UI labels; those do not represent the historical final 60-second schedule.
+
+## Human Authorization Before Response
+
+A finding's priority is not authority to mutate cloud infrastructure. The response plane uses a separate IAM reviewer identity, SigV4-signed requests and challenge/nonce checks. SQS decouples that authorization from downstream Lambda execution.
+
+The browser is intentionally **read-only**. It does not expose approval or containment buttons, and a local mock walkthrough does not execute an AWS mutation.
+
+## Canary-Only Execution and Recovery-First Ordering
+
+The controlled test target was a disposable, unattached EC2 network interface owned by the personal lab. The response executor validated the approved request and canary scope, persisted the original security-group snapshot, and armed a one-time EventBridge Scheduler rollback **before** applying the quarantine security group.
+
+A separately authorized rollback Lambda could later retrieve the saved baseline, restore the original SG and confirm the actual EC2 state before persisting a final status. This recovery capability was designed to remain available independently of new forward live-containment authorization.
+
+## Historical October 13, 2026 Acceptance
+
+| UTC event | Observed result |
+|---|---|
+| 18:08:44 | Original SG snapshot persisted; Scheduler recovery armed |
+| 18:08:45 | Quarantine physically verified |
+| 18:09:44 | Configured 60-second schedule target |
+| 18:10:05 | Scheduler delivered the rollback invocation |
+| 18:10:09 | Original security group restored and verified |
+
+![Approved historical October 13, 2026 AWS lab acceptance evidence card showing quarantine at 18:08:45 UTC, 60-second schedule configuration, and verified original security-group restoration at 18:10:09 UTC: 84 seconds observed](/images/projects/aws-cloud-soc/rollback-84s-historical.png)
+
+*HISTORICAL PERSONAL AWS LAB TEST — October 13, 2026. Separate independent acceptance evidence; **not** a screenshot of the synthetic analyst cockpit.*
+
+**Measured historical quarantine duration: 84 seconds.** The 60-second scheduling configuration was not an exact restoration-time guarantee.
+
+The historical acceptance document recorded the automatic trigger and worker-based EC2 restoration. Earlier test attempts that required administrator restoration and reconciliation remain classified as **manual**, not automatic success.
+
+## Security, Evidence and Limitations
+
+Key design controls include scoped IAM permissions, separate human authorization, a disposable canary allowlist, snapshot-first execution, independent rollback, EC2 readback and DynamoDB/CloudWatch evidence.
+
+![Sanitized synthetic forensic audit screen demonstrating the logical audit model; filter behavior and completeness must not be represented as verified live capabilities](/images/projects/aws-cloud-soc/synthetic-audit.png)
+
+*05 · SYNTHETIC OFFLINE DASHBOARD — Forensic audit explanation. The browser-audited phase filter did not actually filter records; this image is not completeness or cryptographic immutability proof.*
+
+The audit is **logically append-only by policy and role separation**, not cryptographically immutable hardware evidence. Out-of-band administrative actions require reconciliation. Some architecture-page network/encryption assurances were not independently established by the browser audit.
+
+Source-code logging sanitization was merged in October, but its deployment to the running AWS Lambda packages was **not verified** as of the reviewed October 17 documentation. Current billing and the current AWS safe-mode state were also **not rechecked** by the mock-mode browser audit.
+
+## Educational Guide — Download or Read Online
+
+The reviewed public-safe learning guide covers architecture, six CloudTrail heuristics, EventBridge/GuardDuty ingestion, SigV4 human authorization, scoped canary response, snapshot-first rollback, historical evidence, safe testing, and operational limitations.
+
+- [Download the AWS Cloud SOC educational guide (PDF, 10 pages)](/guides/AWS_CLOUD_SOC_COMPLETE_GUIDE_PUBLIC_2026-10-18.pdf)
+- [Read the responsive AWS Cloud SOC educational guide (HTML)](/guides/AWS_CLOUD_SOC_COMPLETE_GUIDE_PUBLIC_2026-10-18.html)
+
+The guide is **educational lab documentation**, not a public source-code release, deployed production runbook, or proof that a new live AWS exercise occurred. The PDF and HTML are served as static site assets; check their URLs in a private browsing window after each release.
+
+## Engineering Takeaways
+
+- Preserve recovery capability before applying containment.
+- Distinguish analyst triage from authority to act.
+- Make synthetic tests, actual AWS readbacks and historical evidence easy to tell apart.
+- Record failed and manual restorations accurately rather than rewriting them as success.
+- Keep the portfolio UI read-only and minimize the exposure of private infrastructure details.
+
+**Portfolio status:** Personal cloud security engineering lab documented with public-safe educational visuals. The historical acceptance evidence and offline synthetic dashboard demonstration remain separate.

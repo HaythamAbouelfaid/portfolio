@@ -1,0 +1,64 @@
+name: Portfolio PR QA
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint-type-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      # The existing lockfile omits eslint-config-next although .eslintrc extends
+      # next/core-web-vitals. Install for QA only; dependency repair stays visible.
+      - name: Supply omitted existing ESLint preset to QA runner
+        run: npm install --no-save --package-lock=false eslint-config-next@15.3.1
+      - name: Repository lint script (legacy Next.js command)
+        run: npm run lint
+      # The Next 15 legacy `next lint` command currently exits after migration
+      # guidance, so perform an actual lint pass on the modified application code.
+      - name: Biome lint of affected routing and scroll components
+        run: npx @biomejs/biome lint src/components/ScrollToHash.tsx 'src/app/work/[slug]/page.tsx'
+      - name: TypeScript no-emit check
+        run: npx tsc --noEmit
+      - name: Repository build script
+        run: npm run build
+
+  scroll-browser-regressions:
+    # Run independently: a pre-existing lint defect must not hide browser evidence.
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Build app for local Playwright preview
+        run: npm run build
+      - name: Install test runner without altering lockfile
+        run: npm install --no-save --package-lock=false @playwright/test@1.56.1
+      - run: npx playwright install --with-deps chromium
+      - name: Test scrolling on desktop and mobile
+        run: npx playwright test
+      - name: Preserve trace and screenshot evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-scroll-qa
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7

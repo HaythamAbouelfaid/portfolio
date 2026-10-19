@@ -12,71 +12,69 @@ interface RouteGuardProps {
 
 const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
   const pathname = usePathname();
-  const [isRouteEnabled, setIsRouteEnabled] = useState(false);
-  const [isPasswordRequired, setIsPasswordRequired] = useState(false);
   const [password, setPassword] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | undefined>();
+  const [checkedPath, setCheckedPath] = useState<string | null>(null);
+  const [authorizedPath, setAuthorizedPath] = useState<string | null>(null);
+
+  // Feature availability is synchronous. Public routes must never be swapped
+  // for a temporary spinner: remounting the page loses its scroll position.
+  const isRouteEnabled = Boolean(pathname && (
+    pathname in routes
+      ? routes[pathname as keyof typeof routes]
+      : (["/blog", "/work"] as const).some(
+          (route) => pathname.startsWith(route) && routes[route],
+        )
+  ));
+  const requiresPassword = Boolean(
+    pathname && protectedRoutes[pathname as keyof typeof protectedRoutes]
+  );
 
   useEffect(() => {
-    const performChecks = async () => {
-      setLoading(true);
-      setIsRouteEnabled(false);
-      setIsPasswordRequired(false);
-      setIsAuthenticated(false);
+    // Only protected paths need an asynchronous authentication check.
+    if (!requiresPassword || !pathname) return;
+    let cancelled = false;
+    setCheckedPath(null);
+    setAuthorizedPath(null);
 
-      const checkRouteEnabled = () => {
-        if (!pathname) return false;
-
-        if (pathname in routes) {
-          return routes[pathname as keyof typeof routes];
-        }
-
-        const dynamicRoutes = ["/blog", "/work"] as const;
-        for (const route of dynamicRoutes) {
-          if (pathname?.startsWith(route) && routes[route]) {
-            return true;
-          }
-        }
-
-        return false;
-      };
-
-      const routeEnabled = checkRouteEnabled();
-      setIsRouteEnabled(routeEnabled);
-
-      if (protectedRoutes[pathname as keyof typeof protectedRoutes]) {
-        setIsPasswordRequired(true);
-
+    const checkAuthentication = async () => {
+      try {
         const response = await fetch("/api/check-auth");
-        if (response.ok) {
-          setIsAuthenticated(true);
-        }
+        if (!cancelled && response.ok) setAuthorizedPath(pathname);
+      } catch {
+        // A failed check falls back to the password form, not protected content.
+      } finally {
+        if (!cancelled) setCheckedPath(pathname);
       }
-
-      setLoading(false);
     };
-
-    performChecks();
-  }, [pathname]);
+    void checkAuthentication();
+    return () => { cancelled = true; };
+  }, [pathname, requiresPassword]);
 
   const handlePasswordSubmit = async () => {
-    const response = await fetch("/api/authenticate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
-    });
-
-    if (response.ok) {
-      setIsAuthenticated(true);
-      setError(undefined);
-    } else {
-      setError("Incorrect password");
+    if (!pathname) return;
+    try {
+      const response = await fetch("/api/authenticate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      if (response.ok) {
+        setAuthorizedPath(pathname);
+        setError(undefined);
+      } else {
+        setError("Incorrect password");
+      }
+    } catch {
+      setError("Authentication unavailable. Please retry.");
     }
   };
 
-  if (loading) {
+  if (!isRouteEnabled) return <NotFound />;
+
+  // The authorization result is bound to the exact pathname. Never allow a
+  // stale successful check to expose another protected route on navigation.
+  if (requiresPassword && checkedPath !== pathname) {
     return (
       <Flex fillWidth paddingY="128" horizontal="center">
         <Spinner />
@@ -84,11 +82,7 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     );
   }
 
-  if (!isRouteEnabled) {
-    return <NotFound />;
-  }
-
-  if (isPasswordRequired && !isAuthenticated) {
+  if (requiresPassword && authorizedPath !== pathname) {
     return (
       <Column paddingY="128" maxWidth={24} gap="24" center>
         <Heading align="center" wrap="balance">
@@ -99,7 +93,7 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
             id="password"
             label="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(event) => setPassword(event.target.value)}
             errorMessage={error}
           />
           <Button onClick={handlePasswordSubmit}>Submit</Button>
