@@ -9,6 +9,12 @@ for (const route of routes) {
     page.on("pageerror", error => browserErrors.push(error.message));
     await page.goto(route, { waitUntil: "domcontentloaded" });
     await page.locator("body").waitFor({ state: "visible" });
+    // RouteGuard initially renders a short spinner. Wait until the actual
+    // document mounts before applying scroll input or measuring stability.
+    await page.waitForFunction(() =>
+      document.documentElement.scrollHeight > window.innerHeight * 2
+    );
+    await page.waitForTimeout(800);
 
     // Collect an evidence trace while scrolling in the viewport, including
     // user route/hash changes and document height. Never mutate application code.
@@ -97,6 +103,11 @@ test("reduced-motion anchor navigation stays functional", async ({ page }) => {
 
 test("back-forward history restores a meaningful scroll position", async ({ page }) => {
   await page.goto("/work", { waitUntil: "load" });
+  // Ensure the route guard has mounted its real page, not the temporary loader.
+  await page.waitForFunction(() =>
+    document.documentElement.scrollHeight > window.innerHeight * 2
+  );
+  await page.waitForTimeout(800);
   await page.evaluate(() => window.scrollTo({ top: 1100, behavior: "instant" }));
   const before = await page.evaluate(() => window.scrollY);
   expect(before).toBeGreaterThan(200);
