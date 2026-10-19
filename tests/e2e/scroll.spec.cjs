@@ -30,7 +30,7 @@ for (const route of routes) {
       takeSample("loaded");
     });
 
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 80; i++) {
       // Drive a normal downward-only sequence all the way to the document end.
       // Touch emulation scrolls the page directly for cross-device consistency.
       const atBottom = await page.evaluate(() =>
