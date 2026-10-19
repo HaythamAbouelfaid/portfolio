@@ -76,7 +76,15 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     }
   };
 
-  if (loading) {
+  // Public pages are already available as server-rendered children.
+  // Replacing them with a spinner during a pathname check collapses the
+  // document and can break browser scroll position/restoration.
+  // Only password-protected routes need a loading/authentication gate.
+  const protectedPath = Boolean(
+    pathname && protectedRoutes[pathname as keyof typeof protectedRoutes]
+  );
+
+  if (loading && protectedPath) {
     return (
       <Flex fillWidth paddingY="128" horizontal="center">
         <Spinner />
@@ -84,7 +92,7 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     );
   }
 
-  if (!isRouteEnabled) {
+  if (!loading && !isRouteEnabled) {
     return <NotFound />;
   }
 
