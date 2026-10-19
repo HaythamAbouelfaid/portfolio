@@ -24,8 +24,12 @@ jobs:
       # next/core-web-vitals. Install for QA only; dependency repair stays visible.
       - name: Supply omitted existing ESLint preset to QA runner
         run: npm install --no-save --package-lock=false eslint-config-next@15.3.1
-      - name: Repository lint script
+      - name: Repository lint script (legacy Next.js command)
         run: npm run lint
+      # The Next 15 legacy `next lint` command currently exits after migration
+      # guidance, so perform an actual lint pass on the modified application code.
+      - name: Biome lint of affected routing and scroll components
+        run: npx @biomejs/biome lint src/components/ScrollToHash.tsx 'src/app/work/[slug]/page.tsx'
       - name: TypeScript no-emit check
         run: npx tsc --noEmit
       - name: Repository build script
