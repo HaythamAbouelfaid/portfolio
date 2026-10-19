@@ -12,6 +12,10 @@ export function ScrollToHash() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // A route transition can replace this page without a native hashchange.
+    // Wait for a concrete pathname before resolving its fragment target.
+    if (!pathname) return;
+
     const navigateToHash = () => {
       const rawHash = window.location.hash.slice(1);
       if (!rawHash) return;
