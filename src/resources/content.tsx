@@ -49,14 +49,14 @@ const home: Home = {
     display: true,
     title: (
       <Row gap="12" vertical="center">
-        <strong className="ml-4">SentinelOps — AI-Assisted Phishing Investigation Platform</strong>{" "}
+        <strong className="ml-4">AWS Cloud SOC — Detection, Investigation &amp; Automated Response</strong>{" "}
         <Line background="brand-alpha-strong" vert height="20" />
         <Text marginRight="4" onBackground="brand-medium">
           Featured Build
         </Text>
       </Row>
     ),
-    href: "/work/11-sentinelops-ai-phishing-investigation",
+    href: "/work/12-aws-cloud-soc-detection-investigation-response",
   },
   subline: (
     <>
