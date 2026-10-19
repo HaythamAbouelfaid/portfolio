@@ -102,7 +102,7 @@ test("back-forward history restores a meaningful scroll position", async ({ page
   expect(before).toBeGreaterThan(200);
   await page.goto(casePath, { waitUntil: "load" });
   await page.goBack({ waitUntil: "load" });
-  await expect(page).toHaveURL(/\\/work\\/?$/);
+  await expect(page).toHaveURL(/\/work\/?$/);
   await expect.poll(async () => page.evaluate(() => window.scrollY))
     .toBeGreaterThanOrEqual(before - 250);
   await page.goForward({ waitUntil: "load" });
