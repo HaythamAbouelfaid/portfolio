@@ -62,6 +62,14 @@ function createImage({ alt, src, ...props }: MediaProps & { src: string }) {
     return null;
   }
 
+  // Reserve the exact approved AWS Cloud SOC illustration proportions before
+  // the images decode. Without this, successive lazy-loaded screenshots resize
+  // the page and visibly shift the viewport during downward scrolling.
+  const isAwsSocImage = src.startsWith("/images/projects/aws-cloud-soc/");
+  const aspectRatio = isAwsSocImage
+    ? src.endsWith("/architecture-portrait.png") ? "4 / 5" : "16 / 9"
+    : undefined;
+
   return (
     <Media
       marginTop="8"
@@ -73,6 +81,7 @@ function createImage({ alt, src, ...props }: MediaProps & { src: string }) {
       alt={alt}
       src={src}
       {...props}
+      style={aspectRatio ? { ...props.style, aspectRatio } : props.style}
     />
   );
 }
